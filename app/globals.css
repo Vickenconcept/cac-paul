@@ -1,26 +1,281 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-navy: #0B1F3A;
+  --color-navy-dark: #060F1C;
+  --color-navy-mid: #0F2847;
+  --color-navy-light: #1A3A5C;
+  --color-gold: #C8902A;
+  --color-gold-light: #E8AE4A;
+  --color-gold-pale: #FDF6E8;
+  --color-gold-border: #E8AE4A40;
+  --color-surface: #FAFAF8;
+  --color-surface-2: #F4F1E8;
+  --color-text: #1A1A2E;
+  --color-muted: #64748B;
+  --color-border: #E2E0D8;
+  --color-white: #FFFFFF;
+
+  --font-heading: var(--font-poppins);
+  --font-body: var(--font-poppins);
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Google Fonts are loaded via next/font in layout.tsx */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-poppins, 'Poppins', system-ui, -apple-system, sans-serif);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-poppins, 'Poppins', system-ui, sans-serif);
+  font-weight: 700;
+  line-height: 1.2;
+  /* No default color — let each component control its own heading color */
+}
+
+/* ========== HASH SCROLL OFFSET (for sticky nav) ========== */
+section[id],
+[id] {
+  scroll-margin-top: 84px;
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 3px;
+}
+
+/* ========== SELECTION ========== */
+::selection {
+  background: var(--color-gold-pale);
+  color: var(--color-navy);
+}
+
+/* ========== UTILITIES ========== */
+.gradient-navy {
+  background: linear-gradient(135deg, var(--color-navy-dark) 0%, var(--color-navy) 50%, var(--color-navy-light) 100%);
+}
+
+.gradient-gold {
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-light) 100%);
+}
+
+.gradient-text-gold {
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* ========== SECTION PATTERN ========== */
+.section-pattern {
+  background-image: radial-gradient(circle at 1px 1px, rgba(200, 144, 42, 0.08) 1px, transparent 0);
+  background-size: 40px 40px;
+}
+
+/* ========== CARD GLASS ========== */
+.card-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 144, 42, 0.15);
+}
+
+/* ========== GOLD LINE DECORATION ========== */
+.gold-line::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light));
+  margin-top: 0.75rem;
+  border-radius: 2px;
+}
+
+.gold-line-center::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light));
+  margin: 0.75rem auto 0;
+  border-radius: 2px;
+}
+
+/* ========== BUTTON BASE ========== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-light) 100%);
+  color: var(--color-navy-dark);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(200, 144, 42, 0.35);
+  letter-spacing: 0.01em;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(200, 144, 42, 0.5);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: transparent;
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border-radius: var(--radius-md);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+.btn-outline:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold-light);
+  background: rgba(200, 144, 42, 0.08);
+}
+
+/* ========== TIPTAP EDITOR ========== */
+.tiptap-editor .ProseMirror {
+  min-height: 350px;
+  padding: 1.5rem;
+  outline: none;
+  font-family: var(--font-poppins, 'Poppins', sans-serif);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-text);
+}
+
+.tiptap-editor .ProseMirror p { margin-bottom: 1rem; }
+.tiptap-editor .ProseMirror h1 { font-size: 2rem; margin-bottom: 1rem; }
+.tiptap-editor .ProseMirror h2 { font-size: 1.5rem; margin-bottom: 0.875rem; }
+.tiptap-editor .ProseMirror h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+.tiptap-editor .ProseMirror ul, .tiptap-editor .ProseMirror ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+.tiptap-editor .ProseMirror li { margin-bottom: 0.25rem; }
+.tiptap-editor .ProseMirror blockquote {
+  border-left: 4px solid var(--color-gold);
+  padding-left: 1rem;
+  color: var(--color-muted);
+  font-style: italic;
+  margin: 1.5rem 0;
+}
+.tiptap-editor .ProseMirror a { color: var(--color-gold); text-decoration: underline; }
+.tiptap-editor .ProseMirror strong { font-weight: 700; }
+.tiptap-editor .ProseMirror em { font-style: italic; }
+.tiptap-editor .ProseMirror code {
+  background: var(--color-surface-2);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-family: monospace;
+  font-size: 0.875em;
+}
+.tiptap-editor .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+.tiptap-editor .ProseMirror img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: 1rem 0;
+}
+
+/* ========== BLOG CONTENT ========== */
+.blog-content p { margin-bottom: 1.25rem; line-height: 1.8; }
+.blog-content h2 { font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--color-navy); }
+.blog-content h3 { font-size: 1.25rem; margin: 1.75rem 0 0.875rem; color: var(--color-navy); }
+.blog-content ul, .blog-content ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+.blog-content li { margin-bottom: 0.375rem; line-height: 1.7; }
+.blog-content blockquote {
+  border-left: 4px solid var(--color-gold);
+  padding: 0.75rem 1.25rem;
+  background: var(--color-gold-pale);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--color-navy);
+  font-style: italic;
+  margin: 1.5rem 0;
+}
+.blog-content a { color: var(--color-gold); text-decoration: underline; }
+.blog-content img { max-width: 100%; height: auto; border-radius: var(--radius-md); margin: 1.5rem 0; }
+.blog-content strong { font-weight: 700; color: var(--color-navy); }
+.blog-content code {
+  background: var(--color-surface-2);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 144, 42, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(200, 144, 42, 0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-pulse-gold {
+  animation: pulse-gold 2.5s ease-in-out infinite;
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }

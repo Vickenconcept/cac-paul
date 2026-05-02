@@ -1,0 +1,231 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter, useParams } from "next/navigation";
+import dynamic from "next/dynamic";
+import type { Post } from "@/lib/posts";
+import { ArrowLeft, Save } from "lucide-react";
+
+const TiptapEditor = dynamic(() => import("../../../components/TiptapEditor"), { ssr: false });
+
+export default function EditPostPage() {
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [form, setForm] = useState({
+    title: "",
+    excerpt: "",
+    category: "Business Registration",
+    author: "Paul & Associates",
+    readTime: "5 min read",
+    featured: false,
+    coverImage: "",
+  });
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    async function load() {
+      const res = await fetch(`/api/posts/${id}`);
+      if (!res.ok) {
+        router.push("/admin");
+        return;
+      }
+      const post: Post = await res.json();
+      setForm({
+        title: post.title,
+        excerpt: post.excerpt,
+        category: post.category,
+        author: post.author,
+        readTime: post.readTime,
+        featured: post.featured,
+        coverImage: post.coverImage,
+      });
+      setContent(post.content);
+      setLoading(false);
+    }
+    load();
+  }, [id, router]);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
+    const { name, value, type } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
+    }));
+  }
+
+  async function handleSave(e: React.FormEvent) {
+    e.preventDefault();
+    setSaving(true);
+    const res = await fetch(`/api/posts/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...form, content }),
+    });
+    if (res.ok) {
+      router.push("/admin");
+    } else {
+      alert("Failed to update post.");
+      setSaving(false);
+    }
+  }
+
+  const CATEGORIES = [
+    "Business Registration",
+    "Business Structure",
+    "Compliance",
+    "Legal Tips",
+    "NGO & Non-Profits",
+    "Post-Incorporation",
+    "CAC Updates",
+    "General",
+  ];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#F4F1E8" }}>
+        <div className="text-sm" style={{ color: "#64748B" }}>Loading post…</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen" style={{ background: "#F4F1E8" }}>
+      <div
+        className="px-4 sm:px-6 py-4 flex items-center justify-between sticky top-0 z-20"
+        style={{
+          background: "rgba(244,241,232,0.95)",
+          borderBottom: "1px solid #E2E0D8",
+          backdropFilter: "blur(8px)",
+        }}
+      >
+        <div className="flex items-center gap-3">
+          <Link
+            href="/admin"
+            className="flex items-center gap-2 text-sm px-3 py-2 rounded-lg"
+            style={{ color: "#64748B", border: "1px solid #E2E0D8", background: "#FFFFFF" }}
+          >
+            <ArrowLeft size={14} /> Admin
+          </Link>
+          <h1 className="text-base font-bold" style={{ color: "#0B1F3A" }}>Edit Post</h1>
+        </div>
+        <button
+          form="edit-form"
+          type="submit"
+          disabled={saving}
+          className="flex items-center gap-2 text-sm px-5 py-2.5 rounded-xl font-bold cursor-pointer disabled:opacity-60"
+          style={{ background: "linear-gradient(135deg, #C8902A, #E8AE4A)", color: "#060F1C" }}
+        >
+          <Save size={14} />
+          {saving ? "Saving…" : "Update Post"}
+        </button>
+      </div>
+
+      <form id="edit-form" onSubmit={handleSave}>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+          <div className="grid lg:grid-cols-[1fr_300px] gap-7">
+            <div className="space-y-5">
+              <div className="p-5 rounded-2xl" style={{ background: "#FFFFFF", border: "1px solid #E2E0D8" }}>
+                <label className="block text-xs font-bold mb-2" style={{ color: "#0B1F3A" }}>Post Title *</label>
+                <input
+                  type="text"
+                  name="title"
+                  value={form.title}
+                  onChange={handleChange}
+                  required
+                  className="w-full text-lg font-bold outline-none"
+                  style={{ color: "#0B1F3A", border: "none", background: "transparent" }}
+                />
+              </div>
+
+              <div className="p-5 rounded-2xl" style={{ background: "#FFFFFF", border: "1px solid #E2E0D8" }}>
+                <label className="block text-xs font-bold mb-2" style={{ color: "#0B1F3A" }}>Excerpt / Meta Description *</label>
+                <textarea
+                  name="excerpt"
+                  value={form.excerpt}
+                  onChange={handleChange}
+                  rows={3}
+                  className="w-full text-sm outline-none resize-none"
+                  style={{ color: "#64748B", border: "none", background: "transparent" }}
+                />
+              </div>
+
+              <div>
+                <div className="text-xs font-bold mb-2" style={{ color: "#0B1F3A" }}>Post Content *</div>
+                <TiptapEditor content={content} onChange={setContent} />
+              </div>
+            </div>
+
+            <div className="space-y-5">
+              <div className="p-5 rounded-2xl" style={{ background: "#FFFFFF", border: "1px solid #E2E0D8" }}>
+                <h3 className="text-sm font-bold mb-4" style={{ color: "#0B1F3A" }}>Post Settings</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-semibold mb-1.5" style={{ color: "#64748B" }}>Category</label>
+                    <select
+                      name="category"
+                      value={form.category}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2.5 rounded-lg text-sm outline-none"
+                      style={{ border: "1px solid #E2E0D8", background: "#FAFAF8", color: "#1A1A2E" }}
+                    >
+                      {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold mb-1.5" style={{ color: "#64748B" }}>Author</label>
+                    <input
+                      type="text"
+                      name="author"
+                      value={form.author}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2.5 rounded-lg text-sm outline-none"
+                      style={{ border: "1px solid #E2E0D8", background: "#FAFAF8", color: "#1A1A2E" }}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold mb-1.5" style={{ color: "#64748B" }}>Read Time</label>
+                    <input
+                      type="text"
+                      name="readTime"
+                      value={form.readTime}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2.5 rounded-lg text-sm outline-none"
+                      style={{ border: "1px solid #E2E0D8", background: "#FAFAF8", color: "#1A1A2E" }}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold mb-1.5" style={{ color: "#64748B" }}>Cover Image URL</label>
+                    <input
+                      type="url"
+                      name="coverImage"
+                      value={form.coverImage}
+                      onChange={handleChange}
+                      placeholder="https://…"
+                      className="w-full px-3 py-2.5 rounded-lg text-sm outline-none"
+                      style={{ border: "1px solid #E2E0D8", background: "#FAFAF8", color: "#1A1A2E" }}
+                    />
+                  </div>
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="featured"
+                      checked={form.featured}
+                      onChange={handleChange}
+                      className="w-4 h-4 accent-[#C8902A]"
+                    />
+                    <span className="text-sm font-medium" style={{ color: "#1A1A2E" }}>Mark as Featured</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}
