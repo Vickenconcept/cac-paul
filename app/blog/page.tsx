@@ -17,8 +17,8 @@ export const dynamic = "force-dynamic";
 
 const CATEGORIES = ["All", "Business Registration", "Business Structure", "Compliance", "Legal Tips"];
 
-export default function BlogPage() {
-  const posts = getAllPosts();
+export default async function BlogPage() {
+  const posts = await getAllPosts();
   const featured = posts.filter((p) => p.featured);
   const regular = posts.filter((p) => !p.featured);
 

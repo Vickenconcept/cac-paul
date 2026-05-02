@@ -1,0 +1,92 @@
+-- ============================================================
+-- Paul & Associates CAC Services — Supabase Database Schema
+-- Run this entire script in your Supabase SQL Editor:
+--   https://app.supabase.com → Your Project → SQL Editor → New Query
+-- ============================================================
+
+-- 1. Create the posts table
+CREATE TABLE IF NOT EXISTS posts (
+  id          TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  slug        TEXT UNIQUE NOT NULL,
+  title       TEXT NOT NULL,
+  excerpt     TEXT NOT NULL DEFAULT '',
+  content     TEXT NOT NULL DEFAULT '',
+  category    TEXT NOT NULL DEFAULT 'General',
+  author      TEXT NOT NULL DEFAULT 'Paul & Associates',
+  published_at DATE NOT NULL DEFAULT CURRENT_DATE,
+  read_time   TEXT NOT NULL DEFAULT '5 min read',
+  featured    BOOLEAN NOT NULL DEFAULT false,
+  cover_image TEXT NOT NULL DEFAULT '',
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- 2. Auto-update updated_at on every row change
+CREATE OR REPLACE FUNCTION update_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER posts_updated_at
+  BEFORE UPDATE ON posts
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+
+-- 3. Row Level Security — public reads, no direct writes (all writes go through service role key)
+ALTER TABLE posts ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Public can read posts"
+  ON posts FOR SELECT
+  USING (true);
+
+-- 4. Index for fast slug lookups and category filtering
+CREATE INDEX IF NOT EXISTS posts_slug_idx      ON posts (slug);
+CREATE INDEX IF NOT EXISTS posts_category_idx  ON posts (category);
+CREATE INDEX IF NOT EXISTS posts_featured_idx  ON posts (featured);
+CREATE INDEX IF NOT EXISTS posts_published_idx ON posts (published_at DESC);
+
+-- 5. Seed with the existing sample posts
+INSERT INTO posts (id, slug, title, excerpt, content, category, author, published_at, read_time, featured, cover_image)
+VALUES
+(
+  '1',
+  'how-to-register-business-name-nigeria-cac',
+  'How to Register a Business Name in Nigeria (2025 CAC Guide)',
+  'A complete step-by-step guide to registering your business name with the Corporate Affairs Commission (CAC) in Nigeria — what you need, how long it takes, and what it costs.',
+  '<h2>What is a Business Name Registration?</h2><p>Registering a business name (also called a sole proprietorship or partnership registration) is the simplest and most affordable way to formalize your business in Nigeria under the Companies and Allied Matters Act (CAMA 2020).</p><h2>Who Should Register a Business Name?</h2><ul><li>Freelancers and consultants</li><li>Small traders and artisans</li><li>Startups testing a business idea</li><li>Partnerships of two or more individuals</li></ul><h2>Step-by-Step Registration Process</h2><p>The CAC has fully digitized the business name registration process. Here''s how it works:</p><ol><li><strong>Name Availability Search</strong> — Check that your desired name is not already taken on the CAC portal.</li><li><strong>Complete CAC Form</strong> — Provide proprietor details, business nature, and address.</li><li><strong>Upload Documents</strong> — Valid ID (NIN, passport, or driver''s license), passport photograph, proof of address.</li><li><strong>Pay Fees</strong> — Government filing fees plus professional service charges.</li><li><strong>Receive Certificate</strong> — Your Certificate of Registration is issued digitally within 24–48 hours.</li></ol><h2>Cost of Business Name Registration</h2><p>At Paul &amp; Associates, business name registration starts at <strong>₦45,000</strong> — inclusive of all CAC government fees and our professional service charge. No hidden extras.</p><h2>How Long Does It Take?</h2><p>With complete documentation, business name registration typically takes <strong>24–48 hours</strong> from submission to certificate issuance.</p><blockquote>Ready to register? Contact us on WhatsApp and we''ll guide you through the entire process — stress-free.</blockquote>',
+  'Business Registration',
+  'Paul & Associates',
+  '2025-04-15',
+  '5 min read',
+  true,
+  ''
+),
+(
+  '2',
+  'business-name-vs-limited-company-nigeria',
+  'Business Name vs. Limited Company in Nigeria: Which is Right for You?',
+  'Confused about whether to register a business name or incorporate a limited liability company? This guide breaks down the key differences, advantages, and when to choose each structure.',
+  '<h2>The Two Most Common Business Structures in Nigeria</h2><p>When starting a business in Nigeria, the two most common registration options are a <strong>Business Name</strong> (sole proprietorship/partnership) and a <strong>Private Limited Company (Ltd)</strong>. Choosing the right structure from the start can save you time, money, and legal headaches.</p><h2>Business Name Registration</h2><p>A business name registration under CAMA 2020 is ideal for small-scale businesses. Key features include:</p><ul><li>Simple and affordable to register (₦45,000 with Paul &amp; Associates)</li><li>No separate legal personality — you and the business are the same entity</li><li>Personal liability for business debts</li><li>Cannot raise capital through share issuance</li><li>Best for sole traders, freelancers, and informal SMEs</li></ul><h2>Private Limited Company (Ltd)</h2><p>A Private Limited Liability Company (RC number) is a separate legal entity distinct from its owners. Benefits include:</p><ul><li>Limited liability — personal assets protected from business debts</li><li>Can raise capital through shares (up to 50 shareholders)</li><li>More credible for contracts, bank loans, and government tenders</li><li>Can own property and sue/be sued independently</li><li>Starts at ₦100,000 with Paul &amp; Associates</li></ul><h2>Which Should You Choose?</h2><p>Choose a <strong>Business Name</strong> if: you''re a solo freelancer, a small trader, or just testing a business idea with minimal investment.</p><p>Choose a <strong>Limited Company</strong> if: you plan to scale, attract investors, win government contracts, or need limited liability protection.</p><blockquote>Not sure which is best for your situation? Chat with us on WhatsApp — we provide free advisory to help you choose the right structure.</blockquote>',
+  'Business Structure',
+  'Paul & Associates',
+  '2025-03-28',
+  '7 min read',
+  true,
+  ''
+),
+(
+  '3',
+  'annual-returns-filing-nigeria-cac',
+  'CAC Annual Returns Filing in Nigeria: Avoid Penalties and Strike-Off',
+  'Every registered company in Nigeria must file annual returns with the CAC. Failure to do so attracts penalties and can result in your company being struck off. Here''s everything you need to know.',
+  '<h2>What are Annual Returns?</h2><p>Annual returns are mandatory statutory filings that every company registered with the Corporate Affairs Commission (CAC) must submit each year.</p><h2>Who Must File Annual Returns?</h2><ul><li>All Business Names (sole proprietorships and partnerships)</li><li>All Private Limited Companies (Ltd)</li><li>All Public Limited Companies (PLC)</li><li>All Incorporated Trustees (NGOs and associations)</li></ul><h2>Penalties for Late Filing</h2><p>The CAC imposes penalties for late or non-filing of annual returns:</p><ul><li>Business Names: ₦5,000 per year of default</li><li>Limited Companies: ₦10,000 per year of default (plus ₦2,500 per day for continuing default)</li></ul><h2>What Happens If You Don''t File?</h2><p>Persistent failure to file annual returns can result in your company being <strong>struck off</strong> the CAC register. A struck-off company loses its legal status.</p><blockquote>Don''t wait until penalties accumulate. Contact us today to file your outstanding annual returns.</blockquote>',
+  'Compliance',
+  'Paul & Associates',
+  '2025-02-10',
+  '6 min read',
+  false,
+  ''
+)
+ON CONFLICT (id) DO NOTHING;

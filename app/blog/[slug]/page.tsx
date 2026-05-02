@@ -12,12 +12,13 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return getAllPosts().map((p) => ({ slug: p.slug }));
+  const posts = await getAllPosts();
+  return posts.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
   if (!post) return { title: "Post Not Found" };
 
   return {
@@ -39,10 +40,11 @@ const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
-  if (!post) notFound();
+  const postData = await getPostBySlug(slug);
+  if (!postData) notFound();
 
-  const allPosts = getAllPosts();
+  const post = postData;
+  const allPosts = await getAllPosts();
   const related = allPosts.filter((p) => p.id !== post.id && p.category === post.category).slice(0, 3);
 
   const articleStructuredData = {

@@ -1,5 +1,4 @@
-import fs from "fs";
-import path from "path";
+import { supabase } from "./supabase";
 
 export interface Post {
   id: string;
@@ -15,56 +14,110 @@ export interface Post {
   coverImage: string;
 }
 
-const DATA_FILE = path.join(process.cwd(), "data", "posts.json");
+// Supabase uses snake_case columns — map to camelCase for the app
+function mapRow(row: Record<string, unknown>): Post {
+  return {
+    id: row.id as string,
+    slug: row.slug as string,
+    title: row.title as string,
+    excerpt: row.excerpt as string,
+    content: row.content as string,
+    category: row.category as string,
+    author: row.author as string,
+    publishedAt: row.published_at as string,
+    readTime: row.read_time as string,
+    featured: row.featured as boolean,
+    coverImage: row.cover_image as string,
+  };
+}
 
-export function getAllPosts(): Post[] {
-  try {
-    const raw = fs.readFileSync(DATA_FILE, "utf-8");
-    const posts: Post[] = JSON.parse(raw);
-    return posts.sort(
-      (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    );
-  } catch {
+export async function getAllPosts(): Promise<Post[]> {
+  const { data, error } = await supabase
+    .from("posts")
+    .select("*")
+    .order("published_at", { ascending: false });
+
+  if (error) {
+    console.error("Supabase getAllPosts error:", error.message);
     return [];
   }
+  return (data ?? []).map(mapRow);
 }
 
-export function getPostBySlug(slug: string): Post | undefined {
-  return getAllPosts().find((p) => p.slug === slug);
+export async function getPostBySlug(slug: string): Promise<Post | null> {
+  const { data, error } = await supabase
+    .from("posts")
+    .select("*")
+    .eq("slug", slug)
+    .single();
+
+  if (error || !data) return null;
+  return mapRow(data);
 }
 
-export function getPostById(id: string): Post | undefined {
-  return getAllPosts().find((p) => p.id === id);
+export async function getPostById(id: string): Promise<Post | null> {
+  const { data, error } = await supabase
+    .from("posts")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error || !data) return null;
+  return mapRow(data);
 }
 
-export function savePosts(posts: Post[]): void {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(posts, null, 2), "utf-8");
+export async function createPost(post: Omit<Post, "id">): Promise<Post> {
+  const { data, error } = await supabase
+    .from("posts")
+    .insert({
+      slug: post.slug,
+      title: post.title,
+      excerpt: post.excerpt,
+      content: post.content,
+      category: post.category,
+      author: post.author,
+      published_at: post.publishedAt,
+      read_time: post.readTime,
+      featured: post.featured,
+      cover_image: post.coverImage,
+    })
+    .select()
+    .single();
+
+  if (error || !data) throw new Error(error?.message ?? "Failed to create post");
+  return mapRow(data);
 }
 
-export function createPost(post: Omit<Post, "id">): Post {
-  const posts = getAllPosts();
-  const id = Date.now().toString();
-  const newPost: Post = { id, ...post };
-  posts.unshift(newPost);
-  savePosts(posts);
-  return newPost;
+export async function updatePost(
+  id: string,
+  updates: Partial<Post>
+): Promise<Post | null> {
+  const dbUpdates: Record<string, unknown> = {};
+  if (updates.slug !== undefined) dbUpdates.slug = updates.slug;
+  if (updates.title !== undefined) dbUpdates.title = updates.title;
+  if (updates.excerpt !== undefined) dbUpdates.excerpt = updates.excerpt;
+  if (updates.content !== undefined) dbUpdates.content = updates.content;
+  if (updates.category !== undefined) dbUpdates.category = updates.category;
+  if (updates.author !== undefined) dbUpdates.author = updates.author;
+  if (updates.publishedAt !== undefined) dbUpdates.published_at = updates.publishedAt;
+  if (updates.readTime !== undefined) dbUpdates.read_time = updates.readTime;
+  if (updates.featured !== undefined) dbUpdates.featured = updates.featured;
+  if (updates.coverImage !== undefined) dbUpdates.cover_image = updates.coverImage;
+
+  const { data, error } = await supabase
+    .from("posts")
+    .update(dbUpdates)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error || !data) return null;
+  return mapRow(data);
 }
 
-export function updatePost(id: string, updates: Partial<Post>): Post | null {
-  const posts = getAllPosts();
-  const idx = posts.findIndex((p) => p.id === id);
-  if (idx === -1) return null;
-  posts[idx] = { ...posts[idx], ...updates };
-  savePosts(posts);
-  return posts[idx];
-}
-
-export function deletePost(id: string): boolean {
-  const posts = getAllPosts();
-  const filtered = posts.filter((p) => p.id !== id);
-  if (filtered.length === posts.length) return false;
-  savePosts(filtered);
-  return true;
+export async function deletePost(id: string): Promise<boolean> {
+  const { error } = await supabase.from("posts").delete().eq("id", id);
+  return !error;
 }
 
 export function generateSlug(title: string): string {

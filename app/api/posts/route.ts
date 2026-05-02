@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getAllPosts, createPost, generateSlug } from "@/lib/posts";
 
 export async function GET() {
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
   return NextResponse.json(posts);
 }
 
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     const slug = body.slug || generateSlug(title);
     const publishedAt = body.publishedAt || new Date().toISOString().split("T")[0];
 
-    const post = createPost({
+    const post = await createPost({
       slug,
       title,
       excerpt: excerpt || "",
@@ -32,7 +32,8 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json(post, { status: 201 });
-  } catch {
-    return NextResponse.json({ error: "Failed to create post" }, { status: 500 });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Failed to create post";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
