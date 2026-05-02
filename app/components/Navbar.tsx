@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import WAButton from "./WAButton";
 
 const NAV_LINKS = [
   { label: "Services", href: "#services" },
@@ -16,6 +17,7 @@ const NAV_LINKS = [
 ];
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
+const WA_URL = `https://wa.me/${WHATSAPP}?text=Hello%20Paul%20%26%20Associates%2C%20I%20need%20help%20with%20CAC%20registration.`;
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -154,15 +156,16 @@ export default function Navbar() {
 
           {/* CTA + Mobile Toggle */}
           <div className="flex items-center gap-3">
-            <a
-              href={`https://wa.me/${WHATSAPP}?text=Hello%20Paul%20%26%20Associates%2C%20I%20need%20help%20with%20CAC%20registration.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex btn-primary text-sm"
+            <WAButton
+              waUrl={WA_URL}
+              source="navbar"
+              modalTitle="Get Started Today"
+              modalSubtitle="Leave your contact details and we'll walk you through the registration process on WhatsApp."
+              className="hidden sm:inline-flex btn-primary text-sm cursor-pointer"
               style={{ padding: "0.625rem 1.25rem", fontSize: "0.875rem" }}
             >
               Get Started
-            </a>
+            </WAButton>
             <button
               onClick={() => setOpen((v) => !v)}
               className="lg:hidden p-2 rounded-md text-white cursor-pointer"
@@ -212,15 +215,16 @@ export default function Navbar() {
                 )
               )}
               <div className="pt-3 mt-2" style={{ borderTop: "1px solid rgba(200,144,42,0.2)" }}>
-                <a
-                  href={`https://wa.me/${WHATSAPP}?text=Hello%20Paul%20%26%20Associates%2C%20I%20need%20help%20with%20CAC%20registration.`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary w-full justify-center"
+                <WAButton
+                  waUrl={WA_URL}
+                  source="navbar-mobile"
+                  modalTitle="Get Started Today"
+                  modalSubtitle="Leave your contact details and we'll walk you through the registration process on WhatsApp."
+                  className="btn-primary w-full justify-center cursor-pointer"
                   onClick={() => setOpen(false)}
                 >
                   Get Started on WhatsApp
-                </a>
+                </WAButton>
               </div>
             </nav>
           </motion.div>

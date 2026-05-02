@@ -31,7 +31,7 @@ export default function EditPostPage() {
     async function load() {
       const res = await fetch(`/api/posts/${id}`);
       if (!res.ok) {
-        router.push("/admin");
+        router.push("/admin/posts");
         return;
       }
       const post: Post = await res.json();
@@ -67,7 +67,7 @@ export default function EditPostPage() {
       body: JSON.stringify({ ...form, content }),
     });
     if (res.ok) {
-      router.push("/admin");
+      router.push("/admin/posts");
     } else {
       alert("Failed to update post.");
       setSaving(false);
@@ -87,31 +87,24 @@ export default function EditPostPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#F4F1E8" }}>
+      <div className="flex items-center justify-center py-20">
         <div className="text-sm" style={{ color: "#64748B" }}>Loading post…</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#F4F1E8" }}>
-      <div
-        className="px-4 sm:px-6 py-4 flex items-center justify-between sticky top-0 z-20"
-        style={{
-          background: "rgba(244,241,232,0.95)",
-          borderBottom: "1px solid #E2E0D8",
-          backdropFilter: "blur(8px)",
-        }}
-      >
+    <div className="space-y-5 max-w-5xl">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link
-            href="/admin"
+            href="/admin/posts"
             className="flex items-center gap-2 text-sm px-3 py-2 rounded-lg"
             style={{ color: "#64748B", border: "1px solid #E2E0D8", background: "#FFFFFF" }}
           >
-            <ArrowLeft size={14} /> Admin
+            <ArrowLeft size={14} /> Posts
           </Link>
-          <h1 className="text-base font-bold" style={{ color: "#0B1F3A" }}>Edit Post</h1>
+          <h1 className="text-lg font-bold" style={{ color: "#0B1F3A" }}>Edit Post</h1>
         </div>
         <button
           form="edit-form"
@@ -126,8 +119,7 @@ export default function EditPostPage() {
       </div>
 
       <form id="edit-form" onSubmit={handleSave}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-          <div className="grid lg:grid-cols-[1fr_300px] gap-7">
+        <div className="grid lg:grid-cols-[1fr_300px] gap-7">
             <div className="space-y-5">
               <div className="p-5 rounded-2xl" style={{ background: "#FFFFFF", border: "1px solid #E2E0D8" }}>
                 <label className="block text-xs font-bold mb-2" style={{ color: "#0B1F3A" }}>Post Title *</label>
@@ -224,7 +216,6 @@ export default function EditPostPage() {
               </div>
             </div>
           </div>
-        </div>
       </form>
     </div>
   );

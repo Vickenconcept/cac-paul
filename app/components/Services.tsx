@@ -18,6 +18,7 @@ import {
   RefreshCw,
   type LucideIcon,
 } from "lucide-react";
+import WAButton from "./WAButton";
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
 
@@ -224,15 +225,16 @@ export default function Services() {
               <p className="text-sm leading-relaxed mb-5" style={{ color: "#64748B" }}>
                 {service.description}
               </p>
-              <a
-                href={`https://wa.me/${WHATSAPP}?text=Hello%2C%20I%20need%20help%20with%20${encodeURIComponent(service.title)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold group-hover:gap-3 transition-all duration-200"
+              <WAButton
+                waUrl={`https://wa.me/${WHATSAPP}?text=Hello%2C%20I%20need%20help%20with%20${encodeURIComponent(service.title)}`}
+                source="services"
+                modalTitle={service.title}
+                modalSubtitle="Leave your contact details and we'll reach out to guide you through this service on WhatsApp."
+                className="inline-flex items-center gap-1.5 text-sm font-semibold group-hover:gap-3 transition-all duration-200 cursor-pointer"
                 style={{ color: "#C8902A" }}
               >
                 Enquire Now <ArrowRight size={14} />
-              </a>
+              </WAButton>
             </motion.div>
           ))}
         </div>

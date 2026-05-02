@@ -1,9 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronDown, Shield, Clock, Award } from "lucide-react";
+import LeadCaptureModal from "./LeadCaptureModal";
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
+const WA_URL = `https://wa.me/${WHATSAPP}?text=Hello%20Paul%20%26%20Associates%2C%20I%20want%20to%20start%20my%20business%20registration.`;
 
 const BADGES = [
   { icon: Shield, label: "CAC Accredited Agent" },
@@ -12,6 +15,8 @@ const BADGES = [
 ];
 
 export default function Hero() {
+  const [modalOpen, setModalOpen] = useState(false);
+
   const scrollToServices = () => {
     const el = document.querySelector("#services");
     if (el) {
@@ -21,6 +26,7 @@ export default function Hero() {
   };
 
   return (
+    <>
     <section
       id="hero"
       className="relative min-h-screen flex flex-col justify-center overflow-hidden"
@@ -110,9 +116,8 @@ export default function Hero() {
               className="flex flex-wrap gap-4 mb-12"
             >
               <a
-                href={`https://wa.me/${WHATSAPP}?text=Hello%20Paul%20%26%20Associates%2C%20I%20want%20to%20start%20my%20business%20registration.`}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#"
+                onClick={(e) => { e.preventDefault(); setModalOpen(true); }}
                 className="btn-primary"
               >
                 Start Registration <ArrowRight size={18} />
@@ -211,5 +216,15 @@ export default function Hero() {
         </motion.div>
       </motion.div>
     </section>
+
+    <LeadCaptureModal
+      isOpen={modalOpen}
+      onClose={() => setModalOpen(false)}
+      waUrl={WA_URL}
+      source="hero"
+      title="Start Your Registration"
+      subtitle="Leave your details and we'll guide you through the process on WhatsApp — step by step."
+    />
+    </>
   );
 }

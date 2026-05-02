@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Check, ArrowRight, Star } from "lucide-react";
+import WAButton from "./WAButton";
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
 
@@ -190,11 +191,12 @@ export default function Pricing() {
                   ))}
                 </ul>
 
-                <a
-                  href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(plan.waMessage)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full text-center py-3.5 rounded-xl font-bold text-sm inline-flex items-center justify-center gap-2 transition-all duration-200"
+                <WAButton
+                  waUrl={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(plan.waMessage)}`}
+                  source="pricing"
+                  modalTitle={`Register: ${plan.name}`}
+                  modalSubtitle="Leave your details and we'll guide you through the process and payment on WhatsApp."
+                  className="w-full text-center py-3.5 rounded-xl font-bold text-sm inline-flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer"
                   style={
                     plan.popular
                       ? {
@@ -209,7 +211,7 @@ export default function Pricing() {
                   }
                 >
                   Get Started <ArrowRight size={15} />
-                </a>
+                </WAButton>
               </div>
             </motion.div>
           ))}
@@ -224,15 +226,16 @@ export default function Pricing() {
           style={{ color: "#64748B" }}
         >
           Need a custom quote for PLC, foreign company, or post-incorporation services?{" "}
-          <a
-            href={`https://wa.me/${WHATSAPP}?text=Hello%2C%20I%20need%20a%20custom%20quote%20for%20my%20registration.`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold underline"
+          <WAButton
+            waUrl={`https://wa.me/${WHATSAPP}?text=Hello%2C%20I%20need%20a%20custom%20quote%20for%20my%20registration.`}
+            source="pricing-custom"
+            modalTitle="Request a Custom Quote"
+            modalSubtitle="Leave your details and we'll provide a tailored quote for your specific registration needs on WhatsApp."
+            className="font-semibold underline cursor-pointer"
             style={{ color: "#C8902A" }}
           >
             Contact us →
-          </a>
+          </WAButton>
         </motion.p>
       </div>
     </section>
