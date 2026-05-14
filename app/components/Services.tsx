@@ -34,21 +34,21 @@ const SERVICES: Service[] = [
     Icon: Building2,
     title: "Business Name Registration",
     description:
-      "Register your sole proprietorship or partnership business name quickly with the CAC. Includes name search, availability check, and full registration certificate — ideal for small businesses and startups.",
+      "Register your sole proprietorship or partnership business name quickly with the CAC. Includes name search, availability check, and full registration certificate, ideal for small businesses and startups.",
     tag: "pre",
   },
   {
     Icon: Scale,
     title: "Private Limited Company (Ltd)",
     description:
-      "Incorporate your Private Limited Liability Company (RC number) with up to 50 shareholders. We prepare all Memoranda, Articles of Association, and CAC forms — fully compliant from day one.",
+      "Incorporate your Private Limited Liability Company (RC number) with up to 50 shareholders. We prepare all Memoranda, Articles of Association, and CAC forms, fully compliant from day one.",
     tag: "pre",
   },
   {
     Icon: TrendingUp,
     title: "Public Limited Company (PLC)",
     description:
-      "Incorporate a Public Limited Company for large-scale operations, capital market listing, or wide public shareholding — complete with regulatory advisory and CAC filing.",
+      "Incorporate a Public Limited Company for large-scale operations, capital market listing, or wide public shareholding, complete with regulatory advisory and CAC filing.",
     tag: "pre",
   },
   {
@@ -62,28 +62,28 @@ const SERVICES: Service[] = [
     Icon: Globe,
     title: "Foreign Company Registration",
     description:
-      "Set up a branch of your foreign company or a wholly-owned Nigerian subsidiary. We guide you through CAC's foreign company registration requirements end-to-end.",
+      "Set up a branch of your foreign company or a wholly-owned Nigerian subsidiary, we guide you through CAC's foreign company registration requirements end-to-end.",
     tag: "pre",
   },
   {
     Icon: Search,
     title: "Business Name Availability Search",
     description:
-      "Conduct a thorough name availability and trademark search on the CAC database before committing to your brand name — avoid costly rejections and legal conflicts.",
+      "Conduct a thorough name availability and trademark search on the CAC database before committing to your brand name, avoid costly rejections and legal conflicts.",
     tag: "pre",
   },
   {
     Icon: CalendarCheck,
     title: "Annual Returns Filing",
     description:
-      "Avoid strike-off and penalties with timely annual returns filing. We handle your annual statutory filings and keep your company status active and in good standing with the CAC.",
+      "Avoid strike-off and penalties with timely annual returns filing, we handle your annual statutory filings and keep your company status active and in good standing with the CAC.",
     tag: "post",
   },
   {
     Icon: UserCog,
     title: "Change of Directors / Shareholders",
     description:
-      "Adding or removing directors, transferring shares, or updating shareholder details? We prepare all CAC Form CAC1.1, CAC 7, and supporting resolutions accurately.",
+      "Adding or removing directors, transferring shares, or updating shareholder details, we prepare all CAC Form CAC1.1, CAC 7, and supporting resolutions accurately.",
     tag: "post",
   },
   {
@@ -104,14 +104,14 @@ const SERVICES: Service[] = [
     Icon: Coins,
     title: "Share Allotment & Capital Increase",
     description:
-      "Allot additional shares to existing or new shareholders, increase your authorized share capital, and update the CAC register accordingly — structured for future investment rounds.",
+      "Allot additional shares to existing or new shareholders, increase your authorized share capital, and update the CAC register accordingly, structured for future investment rounds.",
     tag: "post",
   },
   {
     Icon: RefreshCw,
     title: "Company Restoration & Re-activation",
     description:
-      "Has your company been struck off the CAC register? We handle the full restoration process — filing outstanding returns, paying levies, and reinstating your company to active status.",
+    "Has your company been struck off the CAC register? We handle the full restoration process, filing outstanding returns, paying levies, and reinstating your company to active status.",
     tag: "post",
   },
 ];
@@ -153,7 +153,7 @@ export default function Services() {
             </span>
           </h2>
           <p className="text-lg max-w-2xl mx-auto" style={{ color: "#64748B" }}>
-            From choosing your business structure to maintaining compliance year after year — we
+            From choosing your business structure to maintaining compliance year after year, we
             handle every step so you can focus on building.
           </p>
         </motion.div>

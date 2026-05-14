@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Check, ArrowRight, Star } from "lucide-react";
+import { SITE_BRAND_ONLINE } from "../lib/brand";
 import WAButton from "./WAButton";
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
@@ -21,10 +22,10 @@ const PLANS = [
       "CAC Business Name registration",
       "Certificate of Registration",
       "Certified True Copy (CTC)",
-      "Digital + physical delivery",
+      "Digital certificate delivery (courier on request, separate fee)",
       "1 year compliance reminder",
     ],
-    waMessage: "Hello Paul & Associates, I want to register a Business Name (₦45,000 package).",
+    waMessage: `Hello ${SITE_BRAND_ONLINE}, I want to register a Business Name (₦45,000 package).`,
   },
   {
     id: "limited-company",
@@ -40,12 +41,11 @@ const PLANS = [
       "CAC Ltd Incorporation filing",
       "Certificate of Incorporation (RC No.)",
       "Status Report & CTC",
-      "Company seal (optional)",
-      "Post-incorporation advisory",
+      "Post incorporation advisory",
       "1 year compliance reminder",
     ],
     waMessage:
-      "Hello Paul & Associates, I want to incorporate a Private Limited Company (₦100,000 package).",
+      `Hello ${SITE_BRAND_ONLINE}, I want to incorporate a Private Limited Company (₦100,000 package).`,
   },
   {
     id: "ngo",
@@ -65,7 +65,7 @@ const PLANS = [
       "Full post-registration support",
     ],
     waMessage:
-      "Hello Paul & Associates, I want to register an NGO / Incorporated Trustees (₦150,000 package).",
+      `Hello ${SITE_BRAND_ONLINE}, I want to register an NGO / Incorporated Trustees (₦150,000 package).`,
   },
 ];
 
@@ -93,7 +93,7 @@ export default function Pricing() {
             className="text-4xl md:text-5xl font-black mb-5"
             style={{ color: "#0B1F3A" }}
           >
-            Simple, All-Inclusive{" "}
+            Simple, All Inclusive{" "}
             <span
               style={{
                 background: "linear-gradient(135deg, #C8902A, #E8AE4A)",
@@ -106,7 +106,7 @@ export default function Pricing() {
             </span>
           </h2>
           <p className="text-lg max-w-xl mx-auto" style={{ color: "#64748B" }}>
-            Government charges and our professional fees — clearly itemized, zero surprises.
+            Government charges and our professional fees, clearly itemized, zero surprises.
           </p>
         </motion.div>
 
@@ -222,10 +222,19 @@ export default function Pricing() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.6 }}
-          className="text-center mt-10 text-sm"
+          className="text-center mt-8 text-sm max-w-2xl mx-auto leading-relaxed"
           style={{ color: "#64748B" }}
         >
-          Need a custom quote for PLC, foreign company, or post-incorporation services?{" "}
+          Company seal and similar extras are available as separate add-ons (quoted on request).
+        </motion.p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.65 }}
+          className="text-center mt-4 text-sm"
+          style={{ color: "#64748B" }}
+        >
+          Need a custom quote for PLC, foreign company, or post incorporation services?{" "}
           <WAButton
             waUrl={`https://wa.me/${WHATSAPP}?text=Hello%2C%20I%20need%20a%20custom%20quote%20for%20my%20registration.`}
             source="pricing-custom"

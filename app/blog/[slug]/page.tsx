@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
+import { SITE_BRAND_ONLINE } from "@/app/lib/brand";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import WhatsAppFloat from "../../components/WhatsAppFloat";
@@ -55,7 +56,7 @@ export default async function BlogPostPage({ params }: Props) {
     author: { "@type": "Person", name: post.author },
     publisher: {
       "@type": "Organization",
-      name: "Paul & Associates CAC Services",
+      name: SITE_BRAND_ONLINE,
     },
     datePublished: post.publishedAt,
     articleSection: post.category,
@@ -106,7 +107,7 @@ export default async function BlogPostPage({ params }: Props) {
                   className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
                   style={{ background: "rgba(200,144,42,0.2)", color: "#E8AE4A" }}
                 >
-                  P
+                  {post.author.trim().charAt(0).toUpperCase()}
                 </div>
                 {post.author}
               </span>
@@ -149,7 +150,9 @@ export default async function BlogPostPage({ params }: Props) {
                   Contact us on WhatsApp for a free consultation and get started today.
                 </p>
                 <a
-                  href={`https://wa.me/${WHATSAPP}?text=Hello%20Paul%20%26%20Associates%2C%20I%20read%20your%20article%20on%20${encodeURIComponent(post.title)}%20and%20I%20need%20help.`}
+                  href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
+                    `Hello ${SITE_BRAND_ONLINE}, I read your article on "${post.title}" and I need help.`
+                  )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm text-white"
@@ -180,7 +183,9 @@ export default async function BlogPostPage({ params }: Props) {
                   ].map((item) => (
                     <li key={item.label}>
                       <a
-                        href={`https://wa.me/${WHATSAPP}?text=Hello%2C%20I%20need%20${encodeURIComponent(item.wa)}`}
+                        href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
+                          `Hello ${SITE_BRAND_ONLINE}, I need ${item.wa}.`
+                        )}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 text-sm font-medium transition-colors"

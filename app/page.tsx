@@ -13,9 +13,9 @@ import Footer from "./components/Footer";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 
 export const metadata: Metadata = {
-  title: "Paul & Associates | Accredited CAC Agent — Business Registration Nigeria",
+  title: "CACPro | Accredited CAC Agent | Business registration Nigeria",
   description:
-    "Nigeria's trusted accredited CAC Agent. Register your business name (₦45,000), incorporate a company (₦100,000), or set up an NGO (₦150,000). Fast, transparent, 100% remote — handled by certified legal professionals.",
+    "Nigeria's trusted accredited CAC Agent. Register your business name (₦45,000), incorporate a company (₦100,000), or set up an NGO (₦150,000). Fast, transparent, 100% remote, handled by experienced CAC accredited agents.",
   alternates: { canonical: "/" },
 };
 

@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { Mail, MapPin } from "lucide-react";
+import { SITE_BRAND_ONLINE, SITE_LEGAL_NAME } from "../lib/brand";
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
 const EMAIL = process.env.NEXT_PUBLIC_EMAIL || "info@paulcacservices.ng";
 
 const FOOTER_LINKS = {
-  "Pre-Incorporation": [
+  "Pre incorporation": [
     "Business Name Registration",
     "Private Limited (Ltd)",
     "Public Limited (PLC)",
@@ -13,7 +14,7 @@ const FOOTER_LINKS = {
     "Foreign Company",
     "Name Search",
   ],
-  "Post-Incorporation": [
+  "Post incorporation": [
     "Annual Returns Filing",
     "Change of Directors",
     "Share Allotment",
@@ -47,17 +48,20 @@ export default function Footer() {
                   color: "#060F1C",
                 }}
               >
-                P&amp;A
+                CP
               </div>
               <div>
                 <div
                   className="font-bold text-white text-base leading-tight"
                   style={{ fontFamily: "var(--font-poppins)" }}
                 >
-                  Paul &amp; Associates
+                  {SITE_BRAND_ONLINE}
                 </div>
                 <div className="text-xs" style={{ color: "#E8AE4A", letterSpacing: "0.07em" }}>
                   ACCREDITED CAC AGENT
+                </div>
+                <div className="text-[0.65rem] mt-0.5 leading-snug" style={{ color: "rgba(255,255,255,0.45)" }}>
+                  {SITE_LEGAL_NAME}
                 </div>
               </div>
             </div>
@@ -78,7 +82,7 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-3 mb-6">
               <MapPin size={14} style={{ color: "#E8AE4A" }} />
-              <span className="text-sm">Nigeria — All 36 States + FCT</span>
+              <span className="text-sm">Nigeria: all 36 states + FCT</span>
             </div>
 
             <div className="flex gap-3">
@@ -175,8 +179,8 @@ export default function Footer() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
           <p>
-            © {new Date().getFullYear()} Paul &amp; Associates CAC Services. All rights reserved.
-            &nbsp;|&nbsp; Accredited CAC Agent
+            © {new Date().getFullYear()} {SITE_LEGAL_NAME} ({SITE_BRAND_ONLINE}). All rights reserved.
+            &nbsp;·&nbsp; Accredited CAC Agent
           </p>
           <p>
             Designed with ♦ for Nigerian entrepreneurs &nbsp;·&nbsp;{" "}

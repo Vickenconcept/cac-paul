@@ -20,7 +20,7 @@ export default function EditPostPage() {
     title: "",
     excerpt: "",
     category: "Business Registration",
-    author: "Paul & Associates",
+    author: "CACPro",
     readTime: "5 min read",
     featured: false,
     coverImage: "",

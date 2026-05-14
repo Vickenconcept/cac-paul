@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og";
+import { SITE_BRAND_ONLINE, SITE_LEGAL_NAME } from "./lib/brand";
 
 export const runtime = "edge";
-export const alt = "Paul & Associates — Accredited CAC Agent Nigeria";
+export const alt = `${SITE_BRAND_ONLINE} | Accredited CAC Agent Nigeria`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -51,11 +52,21 @@ export default function OgImage() {
                 color: "#060F1C",
               }}
             >
-              P&A
+              CP
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <span style={{ color: "#FFFFFF", fontSize: "22px", fontWeight: 700 }}>
-                Paul &amp; Associates
+                {SITE_BRAND_ONLINE}
+              </span>
+              <span
+                style={{
+                  color: "rgba(255,255,255,0.55)",
+                  fontSize: "11px",
+                  marginTop: "4px",
+                  maxWidth: "320px",
+                }}
+              >
+                {SITE_LEGAL_NAME}
               </span>
               <span
                 style={{
@@ -63,6 +74,7 @@ export default function OgImage() {
                   fontSize: "11px",
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
+                  marginTop: "6px",
                 }}
               >
                 ACCREDITED CAC AGENT
@@ -83,7 +95,7 @@ export default function OgImage() {
               display: "flex",
             }}
           >
-            ✦ RC Verified · CAC Licensed
+            ✦ RC verified · CAC licensed
           </div>
         </div>
 
@@ -120,7 +132,7 @@ export default function OgImage() {
             }}
           >
             Nigeria&apos;s trusted accredited CAC Agent for business name registration,
-            company incorporation, and post-incorporation compliance.
+            company incorporation, and post incorporation compliance.
           </p>
         </div>
 
@@ -159,7 +171,10 @@ export default function OgImage() {
               display: "flex",
             }}
           >
-            paulcacservices.ng
+            {(process.env.NEXT_PUBLIC_SITE_URL || "https://paulcacservices.ng").replace(
+              /^https?:\/\//i,
+              ""
+            )}
           </div>
         </div>
       </div>

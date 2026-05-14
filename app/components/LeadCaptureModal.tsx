@@ -1,8 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Phone, Mail, User, ArrowRight, MessageCircle } from "lucide-react";
+
+import { SITE_BRAND_ONLINE } from "../lib/brand";
 
 interface LeadCaptureModalProps {
   isOpen: boolean;
@@ -19,11 +22,25 @@ export default function LeadCaptureModal({
   waUrl,
   source = "modal",
   title = "Before We Connect",
-  subtitle = "Leave your details and we'll reach out right away — or skip straight to WhatsApp.",
+  subtitle = "Leave your details and we'll reach out right away, or skip straight to WhatsApp.",
 }: LeadCaptureModalProps) {
+  const [mounted, setMounted] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", email: "" });
   const [saving, setSaving] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isOpen]);
 
   function validate() {
     const e: Record<string, string> = {};
@@ -56,73 +73,71 @@ export default function LeadCaptureModal({
     onClose();
   }
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
-        <>
-          {/* Backdrop */}
+        <div key="lead-capture" className="fixed inset-0 z-[100]">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[60]"
+            className="absolute inset-0"
             style={{ background: "rgba(6,15,28,0.7)", backdropFilter: "blur(4px)" }}
             onClick={onClose}
           />
 
-          {/* Modal */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.92, y: 24 }}
+            initial={{ opacity: 0, scale: 0.92, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.92, y: 24 }}
+            exit={{ opacity: 0, scale: 0.92, y: 16 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed inset-0 z-[61] flex items-center justify-center p-4"
-            style={{ pointerEvents: "none" }}
+            className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 overflow-y-auto overscroll-contain pointer-events-none"
+            role="presentation"
           >
             <div
-              className="w-full max-w-md rounded-2xl overflow-hidden"
+              className="w-full max-w-md rounded-2xl overflow-hidden flex flex-col max-h-[min(92dvh,52rem)] my-auto shadow-2xl pointer-events-auto"
               style={{
                 background: "#FFFFFF",
                 boxShadow: "0 32px 80px rgba(0,0,0,0.25)",
-                pointerEvents: "auto",
               }}
+              onClick={(e) => e.stopPropagation()}
             >
-              {/* Header */}
               <div
-                className="px-6 py-5 flex items-start justify-between"
+                className="px-6 py-5 flex items-start justify-between shrink-0"
                 style={{ background: "linear-gradient(135deg, #060F1C 0%, #0B1F3A 100%)" }}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 min-w-0">
                   <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center"
+                    className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
                     style={{ background: "rgba(200,144,42,0.15)" }}
                   >
                     <MessageCircle size={20} style={{ color: "#E8AE4A" }} />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3 className="font-bold text-white text-base">{title}</h3>
-                    <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>
-                      Paul &amp; Associates CAC Services
+                    <p className="text-xs mt-0.5 truncate" style={{ color: "rgba(255,255,255,0.5)" }}>
+                      {SITE_BRAND_ONLINE}
                     </p>
                   </div>
                 </div>
                 <button
+                  type="button"
                   onClick={onClose}
-                  className="text-white opacity-50 hover:opacity-100 transition-opacity cursor-pointer mt-1"
+                  className="text-white opacity-50 hover:opacity-100 transition-opacity cursor-pointer mt-1 shrink-0"
                 >
                   <X size={18} />
                 </button>
               </div>
 
-              {/* Body */}
-              <div className="p-6">
+              <div className="p-6 overflow-y-auto min-h-0">
                 <p className="text-sm mb-5" style={{ color: "#64748B" }}>
                   {subtitle}
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Name */}
                   <div>
                     <label className="block text-xs font-semibold mb-1.5" style={{ color: "#0B1F3A" }}>
                       Full Name *
@@ -152,12 +167,9 @@ export default function LeadCaptureModal({
                         }
                       />
                     </div>
-                    {errors.name && (
-                      <p className="text-xs mt-1 text-red-500">{errors.name}</p>
-                    )}
+                    {errors.name && <p className="text-xs mt-1 text-red-500">{errors.name}</p>}
                   </div>
 
-                  {/* Phone */}
                   <div>
                     <label className="block text-xs font-semibold mb-1.5" style={{ color: "#0B1F3A" }}>
                       WhatsApp / Phone Number *
@@ -187,12 +199,9 @@ export default function LeadCaptureModal({
                         }
                       />
                     </div>
-                    {errors.phone && (
-                      <p className="text-xs mt-1 text-red-500">{errors.phone}</p>
-                    )}
+                    {errors.phone && <p className="text-xs mt-1 text-red-500">{errors.phone}</p>}
                   </div>
 
-                  {/* Email (optional) */}
                   <div>
                     <label className="block text-xs font-semibold mb-1.5" style={{ color: "#0B1F3A" }}>
                       Email Address{" "}
@@ -221,7 +230,6 @@ export default function LeadCaptureModal({
                     </div>
                   </div>
 
-                  {/* Submit */}
                   <button
                     type="submit"
                     disabled={saving}
@@ -232,7 +240,9 @@ export default function LeadCaptureModal({
                       boxShadow: "0 4px 20px rgba(200,144,42,0.35)",
                     }}
                   >
-                    {saving ? "Saving…" : (
+                    {saving ? (
+                      "Saving…"
+                    ) : (
                       <>
                         Save &amp; Open WhatsApp <ArrowRight size={15} />
                       </>
@@ -240,8 +250,8 @@ export default function LeadCaptureModal({
                   </button>
                 </form>
 
-                {/* Skip */}
                 <button
+                  type="button"
                   onClick={handleSkip}
                   className="w-full mt-3 py-2 text-sm cursor-pointer transition-colors"
                   style={{ color: "#64748B" }}
@@ -251,8 +261,9 @@ export default function LeadCaptureModal({
               </div>
             </div>
           </motion.div>
-        </>
+        </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { SITE_BRAND_ONLINE } from "./lib/brand";
 
 export const metadata: Metadata = {
-  title: "Page Not Found — Paul & Associates CAC Services",
+  title: `Page not found | ${SITE_BRAND_ONLINE}`,
   robots: { index: false },
 };
-
 export default function NotFound() {
   return (
     <>

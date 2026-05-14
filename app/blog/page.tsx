@@ -7,7 +7,7 @@ import { FeaturedPostCard, RegularPostCard, EmptyBlog } from "../components/Blog
 import { BookOpen } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Blog & Resources — CAC Registration Guides Nigeria",
+  title: "Blog & Resources | CAC registration guides Nigeria",
   description:
     "Free guides, tips, and resources on business registration, company incorporation, CAC compliance, and legal requirements for entrepreneurs in Nigeria.",
   alternates: { canonical: "/blog" },
@@ -56,7 +56,7 @@ export default async function BlogPage() {
             </h1>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: "rgba(255,255,255,0.65)" }}>
               Free expert resources to help Nigerian entrepreneurs register, incorporate, and
-              maintain compliant businesses — from our accredited legal team.
+              maintain compliant businesses, from our accredited CAC team.
             </p>
           </div>
         </section>

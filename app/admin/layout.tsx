@@ -167,7 +167,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </div>
             <h1 className="text-xl font-bold text-white mb-1">Admin Panel</h1>
             <p className="text-sm" style={{ color: "rgba(255,255,255,0.5)" }}>
-              Paul &amp; Associates CAC Services
+              CACPro · Palmary Green Kampos Limited
             </p>
           </div>
           <form onSubmit={login} className="space-y-4">

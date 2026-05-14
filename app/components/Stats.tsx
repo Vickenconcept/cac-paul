@@ -16,8 +16,8 @@ const TRUST = [
   { icon: Shield, label: "CAC Accredited Agent" },
   { icon: Award, label: "FIRS Registered" },
   { icon: CheckCircle, label: "SSL Secured" },
-  { icon: Star, label: "5-Star Rated Service" },
-  { icon: CheckCircle, label: "10+ Years Experience" },
+  { icon: Star, label: "5 star rated service" },
+  { icon: CheckCircle, label: "10+ years legal experience" },
 ];
 
 function Counter({ value }: { value: string }) {

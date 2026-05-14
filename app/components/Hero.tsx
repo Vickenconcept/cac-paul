@@ -4,14 +4,15 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronDown, Shield, Clock, Award } from "lucide-react";
 import LeadCaptureModal from "./LeadCaptureModal";
+import { SITE_BRAND_ONLINE } from "../lib/brand";
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
-const WA_URL = `https://wa.me/${WHATSAPP}?text=Hello%20Paul%20%26%20Associates%2C%20I%20want%20to%20start%20my%20business%20registration.`;
+const WA_URL = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`Hello ${SITE_BRAND_ONLINE}, I want to start my business registration.`)}`;
 
 const BADGES = [
   { icon: Shield, label: "CAC Accredited Agent" },
   { icon: Award, label: "RC Verified" },
-  { icon: Clock, label: "24–72hr Turnaround" },
+  { icon: Clock, label: "24 to 72 hr turnaround" },
 ];
 
 export default function Hero() {
@@ -71,7 +72,7 @@ export default function Hero() {
               }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#E8AE4A] animate-pulse" />
-              ✦ Accredited CAC Agent &nbsp;|&nbsp; RC Verified
+              ✦ Accredited CAC Agent · RC Verified
             </motion.div>
 
             <motion.h1
@@ -105,8 +106,8 @@ export default function Hero() {
               style={{ color: "rgba(255,255,255,0.72)" }}
             >
               Nigeria&apos;s trusted accredited CAC Agent for seamless business name registration,
-              company incorporation, and all post-incorporation compliance — handled by certified
-              legal professionals, delivered without stress.
+              company incorporation, and all post incorporation compliance, handled by experienced
+              CAC accredited agents, delivered without stress.
             </motion.p>
 
             <motion.div
@@ -223,7 +224,7 @@ export default function Hero() {
       waUrl={WA_URL}
       source="hero"
       title="Start Your Registration"
-      subtitle="Leave your details and we'll guide you through the process on WhatsApp — step by step."
+      subtitle="Leave your details and we'll guide you through the process on WhatsApp, step by step."
     />
     </>
   );

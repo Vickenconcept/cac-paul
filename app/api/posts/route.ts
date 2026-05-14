@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAllPosts, createPost, generateSlug } from "@/lib/posts";
+import { SITE_BRAND_ONLINE } from "@/app/lib/brand";
 
 export async function GET() {
   const posts = await getAllPosts();
@@ -24,7 +25,7 @@ export async function POST(request: Request) {
       excerpt: excerpt || "",
       content,
       category: category || "General",
-      author: author || "Paul & Associates",
+      author: author || SITE_BRAND_ONLINE,
       publishedAt,
       readTime: readTime || "5 min read",
       featured: featured || false,

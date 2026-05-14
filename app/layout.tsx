@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { SITE_BRAND_ONLINE, SITE_LEGAL_NAME } from "./lib/brand";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -15,11 +16,11 @@ const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Paul & Associates | Accredited CAC Agent — Business Registration Nigeria",
-    template: "%s | Paul & Associates CAC Services",
+    default: "CACPro | Accredited CAC Agent | Business registration Nigeria",
+    template: `%s | ${SITE_BRAND_ONLINE}`,
   },
   description:
-    "Nigeria's trusted accredited CAC Agent for business name registration (₦45k), company incorporation (₦100k), NGO registration (₦150k), and all post-incorporation compliance. Fast, transparent, and 100% remote.",
+    "Nigeria's trusted accredited CAC Agent for business name registration (₦45k), company incorporation (₦100k), NGO registration (₦150k), and all post incorporation compliance. Fast, transparent, and 100% remote.",
   keywords: [
     "CAC agent Nigeria",
     "business registration Nigeria",
@@ -34,21 +35,21 @@ export const metadata: Metadata = {
     "accredited CAC agent Lagos",
     "business name registration 45000",
   ],
-  authors: [{ name: "Paul & Associates Legal Practitioners" }],
-  creator: "Paul & Associates",
-  publisher: "Paul & Associates CAC Services",
+  authors: [{ name: SITE_LEGAL_NAME }],
+  creator: SITE_LEGAL_NAME,
+  publisher: `${SITE_BRAND_ONLINE} (${SITE_LEGAL_NAME})`,
   openGraph: {
     type: "website",
     locale: "en_NG",
     url: SITE_URL,
-    siteName: "Paul & Associates CAC Services",
-    title: "Accredited CAC Agent | Business Registration Nigeria — Paul & Associates",
+    siteName: SITE_BRAND_ONLINE,
+    title: `Accredited CAC Agent | Business registration Nigeria | ${SITE_BRAND_ONLINE}`,
     description:
-      "Register your business name (₦45k), incorporate a company (₦100k), or set up an NGO (₦150k) with Nigeria's trusted accredited CAC Agent. Fast. Transparent. 100% Remote.",
+      "Register your business name (₦45k), incorporate a company (₦100k), or set up an NGO (₦150k) with Nigeria's trusted accredited CAC Agent. Fast. Transparent. 100% remote.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Paul & Associates | CAC Business Registration Nigeria",
+    title: `${SITE_BRAND_ONLINE} | CAC business registration Nigeria`,
     description:
       "Nigeria's trusted accredited CAC Agent. Business name ₦45k | Company ₦100k | NGO ₦150k. Fast, transparent, remote.",
   },
@@ -82,12 +83,13 @@ export default function RootLayout({
       {
         "@type": "LegalService",
         "@id": `${SITE_URL}/#organization`,
-        name: "Paul & Associates CAC Services",
+        name: SITE_BRAND_ONLINE,
+        alternateName: SITE_LEGAL_NAME,
         url: SITE_URL,
         logo: `${SITE_URL}/logo.png`,
         image: `${SITE_URL}/og-image.png`,
         description:
-          "Accredited CAC Agent providing business name registration, company incorporation, NGO registration, and post-incorporation compliance services across Nigeria.",
+          "Accredited CAC Agent providing business name registration, company incorporation, NGO registration, and post incorporation compliance services across Nigeria.",
         address: {
           "@type": "PostalAddress",
           addressCountry: "NG",
@@ -130,7 +132,7 @@ export default function RootLayout({
         "@type": "WebSite",
         "@id": `${SITE_URL}/#website`,
         url: SITE_URL,
-        name: "Paul & Associates CAC Services",
+        name: SITE_BRAND_ONLINE,
         publisher: { "@id": `${SITE_URL}/#organization` },
         inLanguage: "en-NG",
       },

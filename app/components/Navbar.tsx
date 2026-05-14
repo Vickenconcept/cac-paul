@@ -6,6 +6,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import WAButton from "./WAButton";
+import { SITE_BRAND_ONLINE, SITE_LEGAL_NAME } from "../lib/brand";
 
 const NAV_LINKS = [
   { label: "Services", href: "#services" },
@@ -17,7 +18,7 @@ const NAV_LINKS = [
 ];
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
-const WA_URL = `https://wa.me/${WHATSAPP}?text=Hello%20Paul%20%26%20Associates%2C%20I%20need%20help%20with%20CAC%20registration.`;
+const WA_URL = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`Hello ${SITE_BRAND_ONLINE}, I need help with CAC registration.`)}`;
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -106,19 +107,25 @@ export default function Navbar() {
                 color: "#060F1C",
               }}
             >
-              P&amp;A
+              CP
             </div>
             <div className="flex flex-col">
               <span
                 className="font-bold text-white leading-tight text-base"
               >
-                Paul &amp; Associates
+                {SITE_BRAND_ONLINE}
               </span>
               <span
                 className="text-xs leading-tight"
                 style={{ color: "#E8AE4A", fontSize: "0.65rem", letterSpacing: "0.08em" }}
               >
                 ACCREDITED CAC AGENT
+              </span>
+              <span
+                className="text-[0.6rem] leading-tight text-white/40 max-w-[140px] truncate sm:max-w-[200px]"
+                title={SITE_LEGAL_NAME}
+              >
+                {SITE_LEGAL_NAME}
               </span>
             </div>
           </Link>

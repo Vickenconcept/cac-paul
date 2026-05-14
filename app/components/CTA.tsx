@@ -4,10 +4,11 @@ import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Mail } from "lucide-react";
 import LeadCaptureModal from "./LeadCaptureModal";
+import { SITE_BRAND_ONLINE } from "../lib/brand";
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
 const EMAIL = process.env.NEXT_PUBLIC_EMAIL || "info@paulcacservices.ng";
-const WA_URL = `https://wa.me/${WHATSAPP}?text=Hello%20Paul%20%26%20Associates%2C%20I%20am%20ready%20to%20register%20my%20business.`;
+const WA_URL = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`Hello ${SITE_BRAND_ONLINE}, I am ready to register my business.`)}`;
 
 export default function CTA() {
   const ref = useRef(null);
@@ -68,7 +69,7 @@ export default function CTA() {
             className="text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed"
             style={{ color: "rgba(255,255,255,0.65)" }}
           >
-            Join over 2,500 entrepreneurs and businesses who trusted Paul &amp; Associates to get
+            Join over 2,500 entrepreneurs and businesses who trusted CACPro to get
             them registered, compliant, and investor-ready.
           </p>
 

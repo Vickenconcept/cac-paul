@@ -4,8 +4,10 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Phone, Mail, User, ArrowRight } from "lucide-react";
 
+import { SITE_BRAND_ONLINE } from "../lib/brand";
+
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
-const WA_URL = `https://wa.me/${WHATSAPP}?text=Hello%20Paul%20%26%20Associates%2C%20I%20need%20help%20with%20my%20business%20registration.`;
+const WA_URL = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`Hello ${SITE_BRAND_ONLINE}, I need help with my business registration.`)}`;
 
 const WA_ICON = (
   <svg viewBox="0 0 24 24" className="fill-current" aria-hidden="true">
@@ -82,10 +84,10 @@ export default function WhatsAppFloat() {
                   className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm"
                   style={{ background: "rgba(255,255,255,0.2)", color: "#FFFFFF" }}
                 >
-                  P&amp;A
+                  CP
                 </div>
                 <div>
-                  <div className="text-white font-semibold text-sm">Paul &amp; Associates</div>
+                  <div className="text-white font-semibold text-sm">{SITE_BRAND_ONLINE}</div>
                   <div className="text-xs flex items-center gap-1.5" style={{ color: "rgba(255,255,255,0.7)" }}>
                     <span className="w-2 h-2 rounded-full bg-green-400 inline-block" />
                     Typically replies instantly
@@ -105,7 +107,7 @@ export default function WhatsAppFloat() {
                     className="rounded-xl rounded-tl-none p-4 text-sm leading-relaxed shadow-sm"
                     style={{ background: "#FFFFFF", color: "#1A1A2E", maxWidth: "90%" }}
                   >
-                    Hello! 👋 I&apos;m from Paul &amp; Associates. How can I help you today?
+                    Hello! 👋 I&apos;m from {SITE_BRAND_ONLINE}. How can I help you today?
                     <br /><br />
                     Need to register a business name, incorporate a company, or file annual returns?
                     <br /><br />

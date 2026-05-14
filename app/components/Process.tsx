@@ -23,7 +23,7 @@ const STEPS: Step[] = [
     num: "01",
     title: "Consultation",
     description:
-      "Tell us about your business and goals. We advise you on the best structure — Business Name, Ltd, PLC, or NGO — based on your needs and industry.",
+      "Tell us about your business and goals. We advise you on the best structure: Business Name, Ltd, PLC, or NGO, based on your needs and industry.",
     Icon: MessageCircle,
   },
   {
@@ -44,14 +44,14 @@ const STEPS: Step[] = [
     num: "04",
     title: "CAC Filing",
     description:
-      "We file all documents on your behalf through the accredited CAC portal and pay all applicable government charges — nothing left to you.",
+      "We file all documents on your behalf through the accredited CAC portal and pay all applicable government charges. Nothing left to you.",
     Icon: Landmark,
   },
   {
     num: "05",
     title: "Certificate Delivery",
     description:
-      "Receive your CAC Certificate of Incorporation or Registration digitally — and by courier if a physical copy is requested.",
+      "Receive your CAC Certificate of Incorporation or Registration digitally, and by courier if you request a physical copy (courier is quoted separately).",
     Icon: Trophy,
   },
 ];

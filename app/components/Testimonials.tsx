@@ -7,51 +7,39 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 const TESTIMONIALS = [
   {
     rating: 5,
-    text: "I needed my company incorporated in less than 3 days before a major contract signing. Paul & Associates delivered in exactly 48 hours. Certificate, status report — everything. Absolutely phenomenal service.",
-    name: "Adaeze Okonkwo",
-    role: "CEO, Meridian Logistics Ltd",
+    text: "I needed my company incorporated in less than 3 days before a major contract signing. The team delivered in exactly 48 hours. Certificate, status report: everything. Absolutely phenomenal service.",
+    displayName: "A. O.",
     location: "Lagos",
-    initials: "AO",
   },
   {
     rating: 5,
-    text: "I had been struggling to file our annual returns for two years. Paul & Associates sorted everything — outstanding filings, penalties waived, company restored. I should have called them sooner!",
-    name: "Babatunde Musa",
-    role: "Director, Greenfield Properties",
+    text: "I had been struggling to file our annual returns for two years. They sorted everything: outstanding filings, penalties addressed, company restored. I should have reached out sooner!",
+    displayName: "B. M.",
     location: "Abuja",
-    initials: "BM",
   },
   {
     rating: 5,
-    text: "They registered our NGO from start to finish — constitution, newspaper publication, gazette. Transparent, professional, and genuinely knowledgeable about nonprofit compliance. Highly recommend!",
-    name: "Funmi Eze",
-    role: "Executive Director, Arise Foundation",
+    text: "They registered our NGO from start to finish: constitution, newspaper publication, gazette. Transparent, professional, and genuinely knowledgeable about nonprofit compliance. Highly recommend!",
+    displayName: "F. E.",
     location: "Port Harcourt",
-    initials: "FE",
   },
   {
     rating: 5,
-    text: "As a diaspora Nigerian registering a business remotely, I was skeptical. Paul & Associates guided me every step, answered every question, and I have my RC number without setting foot in Nigeria. Outstanding!",
-    name: "Kelechi Anyanwu",
-    role: "Founder, TechBridge NG",
-    location: "UK-based",
-    initials: "KA",
+    text: "As a diaspora Nigerian registering a business remotely, I was skeptical. The team guided me every step, answered every question, and I have my RC number without setting foot in Nigeria. Outstanding!",
+    displayName: "K. A.",
+    location: "UK",
   },
   {
     rating: 5,
-    text: "The name change and amendment of our objects clause was handled flawlessly. What I thought would take months took just two weeks. Their post-incorporation expertise is unmatched in Nigeria.",
-    name: "Temi Nwachukwu",
-    role: "CFO, Novalink Industries",
+    text: "The name change and amendment of our objects clause was handled flawlessly. What I thought would take months took just two weeks. Their post incorporation expertise is unmatched in Nigeria.",
+    displayName: "T. N.",
     location: "Kano",
-    initials: "TN",
   },
   {
     rating: 5,
-    text: "We used Paul & Associates for the share allotment when we brought on investors. They prepared all the board resolutions, CAC filings, and share certificates — clean, error-free, and investor-ready.",
-    name: "David Ogundele",
-    role: "Co-founder, Finvest Capital",
+    text: "We used them for the share allotment when we brought on investors. They prepared all the board resolutions, CAC filings, and share certificates: clean, error free, and investor ready.",
+    displayName: "D. O.",
     location: "Lagos",
-    initials: "DO",
   },
 ];
 
@@ -101,8 +89,8 @@ export default function Testimonials() {
             </span>
           </h2>
           <p className="text-base max-w-xl mx-auto" style={{ color: "#64748B" }}>
-            From first-time entrepreneurs to established enterprises — see what our clients say
-            about working with us.
+            From first time entrepreneurs to established enterprises: see what our clients say about
+            working with us.
           </p>
         </motion.div>
 
@@ -118,7 +106,7 @@ export default function Testimonials() {
           >
             {shown.map((t) => (
               <div
-                key={t.name}
+                key={`${t.displayName}-${t.location}-${page}`}
                 className="p-7 rounded-2xl flex flex-col gap-4"
                 style={{
                   background: "#FFFFFF",
@@ -144,14 +132,14 @@ export default function Testimonials() {
                       color: "#E8AE4A",
                     }}
                   >
-                    {t.initials}
+                    {t.displayName.replace(/\.\s*/g, "").replace(/\s/g, "")}
                   </div>
                   <div>
                     <div className="text-sm font-bold" style={{ color: "#0B1F3A" }}>
-                      {t.name}
+                      {t.displayName}
                     </div>
                     <div className="text-xs" style={{ color: "#64748B" }}>
-                      {t.role} · {t.location}
+                      {t.location}
                     </div>
                   </div>
                 </div>

@@ -23,37 +23,37 @@ const REASONS: Reason[] = [
     Icon: ShieldCheck,
     title: "Fully Accredited by the CAC",
     description:
-      "We are a licensed and accredited legal practitioner registered directly with the Corporate Affairs Commission — your filings go through properly, first time, every time.",
+      "We are an experienced CAC accredited agent registered with the Corporate Affairs Commission. Your filings go through properly, first time, every time.",
   },
   {
     Icon: Zap,
     title: "Fast, Guaranteed Turnaround",
     description:
-      "Standard incorporation in 24–72 hours. We track every application and notify you at each stage — no ghosting, no delays, no excuses.",
+      "Standard incorporation in 24 to 72 hours. We track every application and notify you at each stage: no ghosting, no delays, no excuses.",
   },
   {
     Icon: MessageSquare,
-    title: "Dedicated Legal Advisory",
+    title: "Dedicated Registration Advisory",
     description:
-      "You get a dedicated legal officer, not a chatbot. We advise on the right structure, compliance obligations, and regulatory requirements for your industry.",
+      "You get a dedicated accredited agent, not a chatbot. We advise on the right structure, compliance obligations, and regulatory requirements for your industry.",
   },
   {
     Icon: Lock,
     title: "100% Transparent Pricing",
     description:
-      "No hidden fees. No surprises. You see everything upfront — our fee, CAC government charges, and any stamp duties. What we quote is what you pay.",
+      "No hidden fees. No surprises. You see everything upfront: our fee, CAC government charges, and any stamp duties. What we quote is what you pay.",
   },
   {
     Icon: Globe,
     title: "Nationwide Remote Service",
     description:
-      "Serving clients across all 36 states and the FCT — and in the diaspora. Everything is handled digitally. You never need to visit a CAC office.",
+      "Serving clients across all 36 states and the FCT, and in the diaspora. Everything is handled digitally. You never need to visit a CAC office.",
   },
   {
     Icon: Building,
     title: "10+ Years of Legal Experience",
     description:
-      "A decade of CAC filings, corporate compliance, and legal practice. We've seen every scenario — and we know how to handle yours.",
+      "Over a decade of CAC filings, corporate compliance, and accredited agency work. We have seen every scenario and know how to handle yours.",
   },
 ];
 
@@ -109,9 +109,9 @@ export default function WhyUs() {
               </span>
             </h2>
             <p style={{ color: "rgba(255,255,255,0.65)", lineHeight: 1.75, fontSize: "1.0625rem" }}>
-              We are a fully accredited, experienced CAC agent legal practice. Over the past
-              decade, we&apos;ve helped thousands of entrepreneurs, SMEs, NGOs, and corporations
-              establish and maintain their legal presence in Nigeria.
+              We are an experienced CAC accredited agent, fully accredited with the Commission. Since
+              2014 we have helped thousands of entrepreneurs, SMEs, NGOs, and corporations establish and
+              maintain their legal presence in Nigeria.
             </p>
           </motion.div>
 

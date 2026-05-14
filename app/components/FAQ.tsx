@@ -6,16 +6,16 @@ import { ChevronDown, MessageCircle } from "lucide-react";
 import WAButton from "./WAButton";
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
-const WA_URL = `https://wa.me/${WHATSAPP}?text=Hello%20Paul%20%26%20Associates%2C%20I%20have%20a%20question%20about%20CAC%20registration.`;
+const WA_URL = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hello CACPro, I have a question about CAC registration.")}`;
 
 const FAQS = [
   {
     q: "What is the difference between a Business Name and a Limited Company?",
-    a: "A Business Name (sole proprietorship/partnership) is simpler and cheaper but offers no legal separation between you and the business. A Limited Company (Ltd) is a separate legal entity — it can own assets, sue, and be sued independently, making it ideal for growth, investors, and government contracts.",
+    a: "A Business Name (sole proprietorship/partnership) is simpler and cheaper but offers no legal separation between you and the business. A Limited Company (Ltd) is a separate legal entity: it can own assets, sue, and be sued independently, making it ideal for growth, investors, and government contracts.",
   },
   {
     q: "How long does company incorporation take?",
-    a: "With complete documents, Business Name registration typically takes 24–48 hours. Limited Company (Ltd) incorporation takes 48–72 hours on the CAC portal. NGO/Incorporated Trustees can take 4–6 weeks due to mandatory newspaper publication requirements.",
+    a: "With complete documents, Business Name registration typically takes 24 to 48 hours. Limited Company (Ltd) incorporation takes 48 to 72 hours on the CAC portal. NGO/Incorporated Trustees can take 4 to 6 weeks due to mandatory newspaper publication requirements.",
   },
   {
     q: "What documents do I need to incorporate a company?",
@@ -23,7 +23,7 @@ const FAQS = [
   },
   {
     q: "Can I register a company without being physically present?",
-    a: "Yes! Our service is 100% remote-friendly. All documents are submitted and processed digitally. Your certificate is delivered via email and courier if physical copies are needed. We serve clients across Nigeria and in the diaspora.",
+    a: "Yes! Our service is 100% remote-friendly. All documents are submitted and processed digitally. Your certificate is delivered by email, and by courier if you request a physical copy (courier is charged separately). We serve clients across Nigeria and in the diaspora.",
   },
   {
     q: "What happens if I don't file annual returns?",
@@ -31,7 +31,7 @@ const FAQS = [
   },
   {
     q: "Are your fees inclusive of CAC government charges?",
-    a: "Yes. Our quoted prices include all CAC filing fees, stamp duties, and our professional service charge. There are no hidden extras. Any additional cost (e.g., physical courier, company seal) is communicated upfront before you commit.",
+    a: "Yes. Our quoted prices include all CAC filing fees, stamp duties, and our professional service charge. There are no hidden extras. Any optional add-on (for example courier delivery or a company seal) is communicated upfront before you commit.",
   },
   {
     q: "Can a foreigner own 100% of a Nigerian company?",
@@ -39,7 +39,7 @@ const FAQS = [
   },
   {
     q: "Do you provide post-registration support beyond CAC?",
-    a: "Yes! We also assist with Tax Identification Number (TIN) registration, SCUML compliance, NAFDAC/SON registration referrals, and ongoing corporate secretarial support — ensuring your business is fully set up for operations.",
+    a: "Yes! We also assist with Tax Identification Number (TIN) registration, SCUML compliance, NAFDAC/SON registration referrals, and ongoing corporate secretarial support, helping your business stay set up for operations. These services are provided at a cost and are quoted separately from standard CAC packages.",
   },
   {
     q: "What is the shareholding limit for the ₦100,000 Ltd package?",
@@ -168,14 +168,14 @@ export default function FAQ() {
             Don&apos;t see your question here?
           </h3>
           <p className="text-sm mb-6" style={{ color: "rgba(255,255,255,0.6)" }}>
-            Our legal team is available on WhatsApp to answer any question — no matter how specific.
+            Our team is available on WhatsApp to answer any question, no matter how specific.
             Most questions are answered within minutes.
           </p>
           <WAButton
             waUrl={WA_URL}
             source="faq"
             modalTitle="Ask Us Anything"
-            modalSubtitle="Leave your details and our team will answer your question on WhatsApp — usually within minutes."
+            modalSubtitle="Leave your details and our team will answer your question on WhatsApp, usually within minutes."
             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 cursor-pointer"
             style={{
               background: "#25D366",
