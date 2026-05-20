@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Mail, MapPin } from "lucide-react";
-import { SITE_BRAND_ONLINE, SITE_LEGAL_NAME } from "../lib/brand";
+import { SITE_BRAND_ONLINE, SITE_DEFAULT_EMAIL, SITE_LEGAL_NAME } from "../lib/brand";
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
-const EMAIL = process.env.NEXT_PUBLIC_EMAIL || "info@paulcacservices.ng";
+const EMAIL = SITE_DEFAULT_EMAIL;
 
 const FOOTER_LINKS = {
   "Pre incorporation": [

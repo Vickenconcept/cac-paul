@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
-import { SITE_BRAND_ONLINE } from "@/app/lib/brand";
+import { SITE_BRAND_ONLINE, SITE_LEGAL_NAME } from "@/app/lib/brand";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import WhatsAppFloat from "../../components/WhatsAppFloat";
@@ -33,6 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: post.publishedAt,
       authors: [post.author],
       tags: [post.category, "CAC Nigeria", "Business Registration"],
+      siteName: `${SITE_BRAND_ONLINE} · ${SITE_LEGAL_NAME}`,
     },
     alternates: { canonical: `/blog/${slug}` },
   };

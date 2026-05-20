@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { SITE_BRAND_ONLINE, SITE_LEGAL_NAME } from "./lib/brand";
+import { SITE_BRAND_ONLINE, SITE_CANONICAL_URL, SITE_LEGAL_NAME } from "./lib/brand";
 
 export const runtime = "edge";
 export const alt = `${SITE_BRAND_ONLINE} | Accredited CAC Agent Nigeria`;
@@ -171,10 +171,7 @@ export default function OgImage() {
               display: "flex",
             }}
           >
-            {(process.env.NEXT_PUBLIC_SITE_URL || "https://paulcacservices.ng").replace(
-              /^https?:\/\//i,
-              ""
-            )}
+            {(SITE_CANONICAL_URL).replace(/^https?:\/\//i, "")}
           </div>
         </div>
       </div>

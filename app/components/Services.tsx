@@ -16,6 +16,7 @@ import {
   MapPin,
   Coins,
   RefreshCw,
+  ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
 import WAButton from "./WAButton";
@@ -154,7 +155,7 @@ export default function Services() {
           </h2>
           <p className="text-lg max-w-2xl mx-auto" style={{ color: "#64748B" }}>
             From choosing your business structure to maintaining compliance year after year, we
-            handle every step so you can focus on building.
+            handle every step so you can focus on building, including data protection compliance.
           </p>
         </motion.div>
 
@@ -238,6 +239,55 @@ export default function Services() {
             </motion.div>
           ))}
         </div>
+
+        {/* DPO-as-a-Service — compliance offering (standalone brand coming later) */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.35 }}
+          className="mt-12 p-8 md:p-10 rounded-2xl flex flex-col md:flex-row md:items-center gap-6 md:gap-10"
+          style={{
+            background: "linear-gradient(135deg, #0B1F3A 0%, #0F2847 100%)",
+            border: "1px solid rgba(200,144,42,0.35)",
+            boxShadow: "0 8px 32px rgba(11,31,58,0.12)",
+          }}
+        >
+          <div
+            className="shrink-0 w-14 h-14 rounded-xl flex items-center justify-center"
+            style={{ background: "rgba(200,144,42,0.15)" }}
+          >
+            <ShieldCheck size={28} style={{ color: "#E8AE4A" }} />
+          </div>
+          <div className="flex-1 min-w-0">
+            <span
+              className="inline-block text-xs font-bold tracking-widest uppercase mb-2"
+              style={{ color: "#E8AE4A" }}
+            >
+              Compliance
+            </span>
+            <h3 className="text-xl md:text-2xl font-bold mb-2 text-balance" style={{ color: "#FFFFFF" }}>
+              DPO-as-a-Service
+            </h3>
+            <p className="text-sm md:text-base leading-relaxed" style={{ color: "rgba(255,255,255,0.75)" }}>
+              Outsource your Data Protection Officer role for NDPR and privacy compliance: policies,
+              registers, DPIAs, breach response guidance, and regulator-ready documentation, without
+              hiring a full-time DPO.
+            </p>
+          </div>
+          <WAButton
+            waUrl={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hello, I'm interested in DPO-as-a-Service for compliance.")}`}
+            source="services-dpo"
+            modalTitle="DPO-as-a-Service"
+            modalSubtitle="Leave your contact details and we'll reach out about data protection and NDPR compliance support."
+            className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold transition-all duration-200 cursor-pointer"
+            style={{
+              background: "linear-gradient(135deg, #C8902A, #E8AE4A)",
+              color: "#060F1C",
+            }}
+          >
+            Enquire Now <ArrowRight size={16} />
+          </WAButton>
+        </motion.div>
       </div>
     </section>
   );

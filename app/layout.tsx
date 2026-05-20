@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { SITE_BRAND_ONLINE, SITE_LEGAL_NAME } from "./lib/brand";
+import {
+  SITE_BRAND_ONLINE,
+  SITE_CANONICAL_URL,
+  SITE_LEGAL_NAME,
+} from "./lib/brand";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -10,18 +14,19 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://paulcacservices.ng";
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(SITE_CANONICAL_URL),
+  applicationName: SITE_BRAND_ONLINE,
   title: {
     default: "CACPro | Accredited CAC Agent | Business registration Nigeria",
     template: `%s | ${SITE_BRAND_ONLINE}`,
   },
-  description:
-    "Nigeria's trusted accredited CAC Agent for business name registration (₦45k), company incorporation (₦100k), NGO registration (₦150k), and all post incorporation compliance. Fast, transparent, and 100% remote.",
+  description: `CACPro (${SITE_LEGAL_NAME}) is Nigeria's accredited CAC agent for business name registration (₦45k), company incorporation (₦100k), NGO registration (₦150k), and post incorporation compliance. Fast, transparent, 100% remote.`,
   keywords: [
+    "CACPro",
+    SITE_LEGAL_NAME,
     "CAC agent Nigeria",
     "business registration Nigeria",
     "company incorporation Nigeria",
@@ -41,17 +46,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_NG",
-    url: SITE_URL,
-    siteName: SITE_BRAND_ONLINE,
+    url: SITE_CANONICAL_URL,
+    siteName: `${SITE_BRAND_ONLINE} · ${SITE_LEGAL_NAME}`,
     title: `Accredited CAC Agent | Business registration Nigeria | ${SITE_BRAND_ONLINE}`,
-    description:
-      "Register your business name (₦45k), incorporate a company (₦100k), or set up an NGO (₦150k) with Nigeria's trusted accredited CAC Agent. Fast. Transparent. 100% remote.",
+    description: `Register with ${SITE_BRAND_ONLINE} (${SITE_LEGAL_NAME}): business name ₦45k, company ₦100k, NGO ₦150k. Fast, transparent, remote.`,
   },
   twitter: {
     card: "summary_large_image",
     title: `${SITE_BRAND_ONLINE} | CAC business registration Nigeria`,
-    description:
-      "Nigeria's trusted accredited CAC Agent. Business name ₦45k | Company ₦100k | NGO ₦150k. Fast, transparent, remote.",
+    description: `${SITE_BRAND_ONLINE} · ${SITE_LEGAL_NAME}. Business name ₦45k | Company ₦100k | NGO ₦150k.`,
   },
   robots: {
     index: true,
@@ -65,7 +68,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: SITE_URL,
+    canonical: SITE_CANONICAL_URL,
   },
   category: "Legal Services",
 };
@@ -82,14 +85,13 @@ export default function RootLayout({
     "@graph": [
       {
         "@type": "LegalService",
-        "@id": `${SITE_URL}/#organization`,
+        "@id": `${SITE_CANONICAL_URL}/#organization`,
+        legalName: SITE_LEGAL_NAME,
         name: SITE_BRAND_ONLINE,
-        alternateName: SITE_LEGAL_NAME,
-        url: SITE_URL,
-        logo: `${SITE_URL}/logo.png`,
-        image: `${SITE_URL}/og-image.png`,
-        description:
-          "Accredited CAC Agent providing business name registration, company incorporation, NGO registration, and post incorporation compliance services across Nigeria.",
+        url: SITE_CANONICAL_URL,
+        logo: `${SITE_CANONICAL_URL}/logo.png`,
+        image: `${SITE_CANONICAL_URL}/og-image.png`,
+        description: `${SITE_BRAND_ONLINE} (${SITE_LEGAL_NAME}): accredited CAC agent for business name registration, company incorporation, NGO registration, and post incorporation compliance across Nigeria.`,
         address: {
           "@type": "PostalAddress",
           addressCountry: "NG",
@@ -130,10 +132,10 @@ export default function RootLayout({
       },
       {
         "@type": "WebSite",
-        "@id": `${SITE_URL}/#website`,
-        url: SITE_URL,
+        "@id": `${SITE_CANONICAL_URL}/#website`,
+        url: SITE_CANONICAL_URL,
         name: SITE_BRAND_ONLINE,
-        publisher: { "@id": `${SITE_URL}/#organization` },
+        publisher: { "@id": `${SITE_CANONICAL_URL}/#organization` },
         inLanguage: "en-NG",
       },
     ],

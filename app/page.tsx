@@ -11,11 +11,11 @@ import FAQ from "./components/FAQ";
 import CTA from "./components/CTA";
 import Footer from "./components/Footer";
 import WhatsAppFloat from "./components/WhatsAppFloat";
+import { SITE_BRAND_ONLINE, SITE_LEGAL_NAME } from "./lib/brand";
 
 export const metadata: Metadata = {
   title: "CACPro | Accredited CAC Agent | Business registration Nigeria",
-  description:
-    "Nigeria's trusted accredited CAC Agent. Register your business name (₦45,000), incorporate a company (₦100,000), or set up an NGO (₦150,000). Fast, transparent, 100% remote, handled by experienced CAC accredited agents.",
+  description: `${SITE_BRAND_ONLINE} (${SITE_LEGAL_NAME}): register your business name (₦45,000), incorporate a company (₦100,000), or set up an NGO (₦150,000). Fast, transparent, 100% remote, handled by experienced CAC accredited agents.`,
   alternates: { canonical: "/" },
 };
 

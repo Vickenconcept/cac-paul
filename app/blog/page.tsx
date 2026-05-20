@@ -5,12 +5,17 @@ import Footer from "../components/Footer";
 import WhatsAppFloat from "../components/WhatsAppFloat";
 import { FeaturedPostCard, RegularPostCard, EmptyBlog } from "../components/BlogCards";
 import { BookOpen } from "lucide-react";
+import { SITE_BRAND_ONLINE, SITE_LEGAL_NAME } from "../lib/brand";
 
 export const metadata: Metadata = {
-  title: "Blog & Resources | CAC registration guides Nigeria",
-  description:
-    "Free guides, tips, and resources on business registration, company incorporation, CAC compliance, and legal requirements for entrepreneurs in Nigeria.",
+  title: `Blog & Resources | ${SITE_BRAND_ONLINE}`,
+  description: `CAC guides and tips from ${SITE_BRAND_ONLINE} (${SITE_LEGAL_NAME}): business registration, company incorporation, CAC compliance, and requirements for entrepreneurs in Nigeria.`,
   alternates: { canonical: "/blog" },
+  openGraph: {
+    title: `Blog & Resources | ${SITE_BRAND_ONLINE}`,
+    description: `Guides from ${SITE_BRAND_ONLINE} on CAC registration, incorporation, and compliance in Nigeria.`,
+    siteName: `${SITE_BRAND_ONLINE} · ${SITE_LEGAL_NAME}`,
+  },
 };
 
 export const dynamic = "force-dynamic";

@@ -1,6 +1,10 @@
-/** @type {import('next-sitemap').IConfig} */
+/**
+ * Sitemap & robots.txt for CACPro (Palmary Green Kampos Limited).
+ * Set NEXT_PUBLIC_SITE_URL in each environment so Host / sitemap URLs match production.
+ * @type {import('next-sitemap').IConfig}
+ */
 module.exports = {
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://paulcacservices.ng",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://cac-paul.vercel.app",
   generateRobotsTxt: true,
   changefreq: "weekly",
   priority: 0.7,

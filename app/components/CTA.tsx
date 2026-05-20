@@ -4,10 +4,10 @@ import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Mail } from "lucide-react";
 import LeadCaptureModal from "./LeadCaptureModal";
-import { SITE_BRAND_ONLINE } from "../lib/brand";
+import { SITE_BRAND_ONLINE, SITE_DEFAULT_EMAIL } from "../lib/brand";
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
-const EMAIL = process.env.NEXT_PUBLIC_EMAIL || "info@paulcacservices.ng";
+const EMAIL = SITE_DEFAULT_EMAIL;
 const WA_URL = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`Hello ${SITE_BRAND_ONLINE}, I am ready to register my business.`)}`;
 
 export default function CTA() {
