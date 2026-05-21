@@ -35,7 +35,7 @@ async function fetchBlogPaths() {
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://paulcacservices.ng",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://www.cacpro.com.ng",
   generateRobotsTxt: true,
   changefreq: "weekly",
   priority: 0.7,
