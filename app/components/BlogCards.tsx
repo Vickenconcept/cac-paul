@@ -8,6 +8,7 @@ export function FeaturedPostCard({ post }: { post: Post }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
+      aria-label={`Read article: ${post.title}`}
       className="group p-7 rounded-2xl flex flex-col gap-4"
       style={{
         background: "#FFFFFF",
@@ -80,6 +81,7 @@ export function RegularPostCard({ post }: { post: Post }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
+      aria-label={`Read article: ${post.title}`}
       className="group p-6 rounded-2xl flex flex-col gap-3"
       style={{
         background: "#FFFFFF",

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="CACPro">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C8902A"/>
+      <stop offset="100%" stop-color="#E8AE4A"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="#0B1F3A"/>
+  <rect x="24" y="24" width="464" height="464" rx="80" fill="none" stroke="url(#gold)" stroke-width="16"/>
+  <text x="256" y="300" text-anchor="middle" font-family="system-ui, sans-serif" font-size="180" font-weight="900" fill="url(#gold)">CP</text>
+</svg>

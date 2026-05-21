@@ -9,6 +9,7 @@ export interface Post {
   category: string;
   author: string;
   publishedAt: string;
+  updatedAt: string;
   readTime: string;
   featured: boolean;
   coverImage: string;
@@ -25,6 +26,7 @@ function mapRow(row: Record<string, unknown>): Post {
     category: row.category as string,
     author: row.author as string,
     publishedAt: row.published_at as string,
+    updatedAt: (row.updated_at as string) || (row.published_at as string),
     readTime: row.read_time as string,
     featured: row.featured as boolean,
     coverImage: row.cover_image as string,
@@ -66,7 +68,9 @@ export async function getPostById(id: string): Promise<Post | null> {
   return mapRow(data);
 }
 
-export async function createPost(post: Omit<Post, "id">): Promise<Post> {
+export type NewPost = Omit<Post, "id" | "updatedAt">;
+
+export async function createPost(post: NewPost): Promise<Post> {
   const { data, error } = await supabase
     .from("posts")
     .insert({

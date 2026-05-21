@@ -5,18 +5,9 @@ import Footer from "../components/Footer";
 import WhatsAppFloat from "../components/WhatsAppFloat";
 import { FeaturedPostCard, RegularPostCard, EmptyBlog } from "../components/BlogCards";
 import { BookOpen } from "lucide-react";
-import { SITE_BRAND_ONLINE, SITE_LEGAL_NAME } from "../lib/brand";
+import { buildBlogIndexMetadata, buildBlogIndexStructuredData } from "../lib/blog-seo";
 
-export const metadata: Metadata = {
-  title: `Blog & Resources | ${SITE_BRAND_ONLINE}`,
-  description: `CAC guides and tips from ${SITE_BRAND_ONLINE} (${SITE_LEGAL_NAME}): business registration, company incorporation, CAC compliance, and requirements for entrepreneurs in Nigeria.`,
-  alternates: { canonical: "/blog" },
-  openGraph: {
-    title: `Blog & Resources | ${SITE_BRAND_ONLINE}`,
-    description: `Guides from ${SITE_BRAND_ONLINE} on CAC registration, incorporation, and compliance in Nigeria.`,
-    siteName: `${SITE_BRAND_ONLINE} · ${SITE_LEGAL_NAME}`,
-  },
-};
+export const metadata: Metadata = buildBlogIndexMetadata();
 
 export const dynamic = "force-dynamic";
 
@@ -26,12 +17,16 @@ export default async function BlogPage() {
   const posts = await getAllPosts();
   const featured = posts.filter((p) => p.featured);
   const regular = posts.filter((p) => !p.featured);
+  const structuredData = buildBlogIndexStructuredData(posts);
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <Navbar />
       <main className="min-h-screen pt-[70px]">
-        {/* Hero */}
         <section
           className="py-20 md:py-24"
           style={{ background: "linear-gradient(135deg, #060F1C 0%, #0B1F3A 100%)" }}
@@ -66,10 +61,8 @@ export default async function BlogPage() {
           </div>
         </section>
 
-        {/* Blog content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          {/* Category filters */}
-          <div className="flex flex-wrap gap-2 mb-12">
+          <nav aria-label="Blog categories" className="flex flex-wrap gap-2 mb-12">
             {CATEGORIES.map((cat) => (
               <span
                 key={cat}
@@ -83,13 +76,16 @@ export default async function BlogPage() {
                 {cat}
               </span>
             ))}
-          </div>
+          </nav>
 
-          {/* Featured posts */}
           {featured.length > 0 && (
-            <div className="mb-14">
-              <h2 className="text-xl font-bold mb-6 flex items-center gap-2" style={{ color: "#0B1F3A" }}>
-                <BookOpen size={18} style={{ color: "#C8902A" }} />
+            <section className="mb-14" aria-labelledby="featured-articles-heading">
+              <h2
+                id="featured-articles-heading"
+                className="text-xl font-bold mb-6 flex items-center gap-2"
+                style={{ color: "#0B1F3A" }}
+              >
+                <BookOpen size={18} style={{ color: "#C8902A" }} aria-hidden />
                 Featured Articles
               </h2>
               <div className="grid md:grid-cols-2 gap-7">
@@ -97,13 +93,12 @@ export default async function BlogPage() {
                   <FeaturedPostCard key={post.id} post={post} />
                 ))}
               </div>
-            </div>
+            </section>
           )}
 
-          {/* All posts */}
           {regular.length > 0 && (
-            <div>
-              <h2 className="text-xl font-bold mb-6" style={{ color: "#0B1F3A" }}>
+            <section aria-labelledby="all-articles-heading">
+              <h2 id="all-articles-heading" className="text-xl font-bold mb-6" style={{ color: "#0B1F3A" }}>
                 All Articles
               </h2>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -111,7 +106,7 @@ export default async function BlogPage() {
                   <RegularPostCard key={post.id} post={post} />
                 ))}
               </div>
-            </div>
+            </section>
           )}
 
           {posts.length === 0 && <EmptyBlog />}

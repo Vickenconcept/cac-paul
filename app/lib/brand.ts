@@ -7,7 +7,7 @@ export const SITE_LEGAL_NAME = "Palmary Green Kampos Limited";
  * Override with NEXT_PUBLIC_SITE_URL in each environment (e.g. production domain).
  */
 export const SITE_CANONICAL_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://cac-paul.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://paulcacservices.ng";
 
 /** Contact email when NEXT_PUBLIC_EMAIL is unset (keep mailbox until a CACPro domain is live). */
 export const SITE_DEFAULT_EMAIL =

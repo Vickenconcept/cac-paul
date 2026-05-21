@@ -15,6 +15,15 @@ const poppins = Poppins({
 });
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "2348012345678";
+const GOOGLE_SITE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+
+const OG_IMAGE = {
+  url: "/opengraph-image",
+  width: 1200,
+  height: 630,
+  alt: `${SITE_BRAND_ONLINE} | Accredited CAC Agent — Register Your Business, The Right Way`,
+  type: "image/png" as const,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CANONICAL_URL),
@@ -43,6 +52,14 @@ export const metadata: Metadata = {
   authors: [{ name: SITE_LEGAL_NAME }],
   creator: SITE_LEGAL_NAME,
   publisher: `${SITE_BRAND_ONLINE} (${SITE_LEGAL_NAME})`,
+  icons: {
+    icon: [
+      { url: "/icon", type: "image/png", sizes: "64x64" },
+      { url: "/logo.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/apple-icon", type: "image/png", sizes: "180x180" }],
+    shortcut: "/icon",
+  },
   openGraph: {
     type: "website",
     locale: "en_NG",
@@ -50,12 +67,17 @@ export const metadata: Metadata = {
     siteName: `${SITE_BRAND_ONLINE} · ${SITE_LEGAL_NAME}`,
     title: `Accredited CAC Agent | Business registration Nigeria | ${SITE_BRAND_ONLINE}`,
     description: `Register with ${SITE_BRAND_ONLINE} (${SITE_LEGAL_NAME}): business name ₦45k, company ₦100k, NGO ₦150k. Fast, transparent, remote.`,
+    images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: `${SITE_BRAND_ONLINE} | CAC business registration Nigeria`,
     description: `${SITE_BRAND_ONLINE} · ${SITE_LEGAL_NAME}. Business name ₦45k | Company ₦100k | NGO ₦150k.`,
+    images: [OG_IMAGE.url],
   },
+  ...(GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: GOOGLE_SITE_VERIFICATION } }
+    : {}),
   robots: {
     index: true,
     follow: true,
@@ -89,8 +111,8 @@ export default function RootLayout({
         legalName: SITE_LEGAL_NAME,
         name: SITE_BRAND_ONLINE,
         url: SITE_CANONICAL_URL,
-        logo: `${SITE_CANONICAL_URL}/logo.png`,
-        image: `${SITE_CANONICAL_URL}/og-image.png`,
+        logo: `${SITE_CANONICAL_URL}/logo.svg`,
+        image: `${SITE_CANONICAL_URL}/opengraph-image`,
         description: `${SITE_BRAND_ONLINE} (${SITE_LEGAL_NAME}): accredited CAC agent for business name registration, company incorporation, NGO registration, and post incorporation compliance across Nigeria.`,
         address: {
           "@type": "PostalAddress",
