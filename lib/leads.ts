@@ -83,3 +83,12 @@ export async function getLeadsCountSince(date: string): Promise<number> {
     .gte("created_at", date);
   return count ?? 0;
 }
+
+export async function deleteLead(id: string): Promise<boolean> {
+  const { error } = await supabase.from("leads").delete().eq("id", id);
+  if (error) {
+    console.error("Supabase deleteLead error:", error.message);
+    return false;
+  }
+  return true;
+}

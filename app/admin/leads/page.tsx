@@ -8,7 +8,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
+  Trash2,
 } from "lucide-react";
+import AdminToast, { type AdminToastType } from "@/app/components/AdminToast";
 
 interface Lead {
   id: string;
@@ -54,8 +56,14 @@ export default function AdminLeadsPage() {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: AdminToastType } | null>(null);
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+  function showToast(message: string, type: AdminToastType) {
+    setToast({ message, type });
+  }
 
   const fetchLeads = useCallback(async (p: number) => {
     setLoading(true);
@@ -67,6 +75,34 @@ export default function AdminLeadsPage() {
   }, []);
 
   useEffect(() => { fetchLeads(page); }, [page, fetchLeads]);
+
+  async function deleteLead(lead: Lead) {
+    const label = lead.name || lead.phone || lead.email || "this lead";
+    if (!confirm(`Delete "${label}"? This cannot be undone.`)) return;
+
+    setDeleting(lead.id);
+    try {
+      const res = await fetch(`/api/leads/${lead.id}`, { method: "DELETE" });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error ?? "Failed to delete lead");
+      }
+
+      showToast("Lead deleted successfully.", "success");
+
+      const remainingOnPage = leads.length - 1;
+      if (remainingOnPage === 0 && page > 1) {
+        setPage(page - 1);
+      } else {
+        await fetchLeads(page);
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Failed to delete lead";
+      showToast(msg, "error");
+    } finally {
+      setDeleting(null);
+    }
+  }
 
   function exportCSV() {
     const header = "Name,Phone,Email,Source,Date\n";
@@ -83,7 +119,14 @@ export default function AdminLeadsPage() {
   }
 
   return (
-    <div className="space-y-5 max-w-6xl">
+    <div className="space-y-5 max-w-6xl relative">
+      {toast && (
+        <AdminToast
+          message={toast.message}
+          type={toast.type}
+          onDismiss={() => setToast(null)}
+        />
+      )}
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -123,7 +166,7 @@ export default function AdminLeadsPage() {
           <>
             {/* Table header */}
             <div
-              className="hidden md:grid grid-cols-[1.5fr_1fr_1.5fr_100px_100px] px-5 py-3 text-xs font-bold uppercase tracking-wider"
+              className="hidden md:grid grid-cols-[1.5fr_1fr_1.5fr_100px_100px_56px] px-5 py-3 text-xs font-bold uppercase tracking-wider"
               style={{ borderBottom: "1px solid #F0EDE6", color: "#94A3B8", background: "#FAFAF8" }}
             >
               <span>Contact</span>
@@ -131,13 +174,14 @@ export default function AdminLeadsPage() {
               <span>Email</span>
               <span>Source</span>
               <span>Date</span>
+              <span className="text-right">Actions</span>
             </div>
 
             <div className="divide-y" style={{ borderColor: "#F0EDE6" }}>
               {leads.map((lead) => (
                 <div
                   key={lead.id}
-                  className="flex flex-col md:grid md:grid-cols-[1.5fr_1fr_1.5fr_100px_100px] md:items-center gap-1 md:gap-0 px-5 py-4"
+                  className="flex flex-col md:grid md:grid-cols-[1.5fr_1fr_1.5fr_100px_100px_56px] md:items-center gap-1 md:gap-0 px-5 py-4"
                 >
                   {/* Name */}
                   <div className="flex items-center gap-3">
@@ -181,6 +225,20 @@ export default function AdminLeadsPage() {
                       month: "short",
                       year: "2-digit",
                     })}
+                  </div>
+
+                  {/* Delete */}
+                  <div className="flex md:justify-end shrink-0 mt-2 md:mt-0">
+                    <button
+                      type="button"
+                      onClick={() => deleteLead(lead)}
+                      disabled={deleting === lead.id}
+                      title="Delete lead"
+                      className="w-8 h-8 rounded-lg flex items-center justify-center border cursor-pointer disabled:opacity-40"
+                      style={{ borderColor: "#FEE2E2", color: "#EF4444" }}
+                    >
+                      <Trash2 size={13} />
+                    </button>
                   </div>
                 </div>
               ))}
