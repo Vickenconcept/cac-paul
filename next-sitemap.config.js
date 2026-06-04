@@ -56,6 +56,7 @@ module.exports = {
       await config.transform(config, "/", { priority: 1.0, changefreq: "weekly" }),
       await config.transform(config, "/blog", { priority: 0.85, changefreq: "weekly" }),
       await config.transform(config, "/privacy", { priority: 0.5, changefreq: "yearly" }),
+      await config.transform(config, "/terms", { priority: 0.5, changefreq: "yearly" }),
     ];
 
     const posts = await fetchBlogPaths();
