@@ -14,10 +14,13 @@ const STATS = [
 
 const TRUST = [
   { icon: Shield, label: "CAC Accredited Agent" },
-  { icon: Award, label: "FIRS Registered" },
   { icon: CheckCircle, label: "SSL Secured" },
   { icon: Star, label: "5 star rated service" },
-  { icon: CheckCircle, label: "10+ end-to-end business set up and development experience" },
+  {
+    icon: CheckCircle,
+    label: "10+ end-to-end business set up and development experience",
+    fullWidthOnMobile: true,
+  },
 ];
 
 function Counter({ value }: { value: string }) {
@@ -90,17 +93,29 @@ export default function Stats() {
           >
             Trusted By
           </span>
-          {TRUST.map(({ icon: Icon, label }, i) => (
+          {TRUST.map(({ icon: Icon, label, fullWidthOnMobile }, i) => (
             <motion.div
               key={label}
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
               transition={{ delay: 0.5 + i * 0.08 }}
-              className="flex items-center gap-2"
+              className={`flex items-center gap-2 ${
+                fullWidthOnMobile
+                  ? "basis-full justify-center sm:basis-auto sm:justify-start px-2 sm:px-0"
+                  : ""
+              }`}
               style={{ color: "rgba(255,255,255,0.75)" }}
             >
-              <Icon size={15} style={{ color: "#E8AE4A" }} />
-              <span className="text-sm font-medium whitespace-nowrap">{label}</span>
+              <Icon size={15} className="shrink-0" style={{ color: "#E8AE4A" }} />
+              <span
+                className={`text-sm font-medium leading-snug ${
+                  fullWidthOnMobile
+                    ? "text-center sm:text-left text-balance whitespace-normal max-w-[18rem] sm:max-w-none"
+                    : "whitespace-nowrap"
+                }`}
+              >
+                {label}
+              </span>
             </motion.div>
           ))}
         </motion.div>
