@@ -17,7 +17,7 @@ const TRUST = [
   { icon: Award, label: "FIRS Registered" },
   { icon: CheckCircle, label: "SSL Secured" },
   { icon: Star, label: "5 star rated service" },
-  { icon: CheckCircle, label: "10+ years legal experience" },
+  { icon: CheckCircle, label: "10+ end-to-end business set up and development experience" },
 ];
 
 function Counter({ value }: { value: string }) {

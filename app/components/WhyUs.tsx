@@ -51,7 +51,7 @@ const REASONS: Reason[] = [
   },
   {
     Icon: Building,
-    title: "10+ Years of Legal Experience",
+    title: "10+ Years of End-to-End Business Set Up and Development Experience",
     description:
       "Over a decade of CAC filings, corporate compliance, and accredited agency work. We have seen every scenario and know how to handle yours.",
   },
